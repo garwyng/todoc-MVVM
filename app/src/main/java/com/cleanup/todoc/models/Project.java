@@ -7,6 +7,7 @@ import androidx.annotation.Nullable;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.ForeignKey;
+import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
 /**
@@ -14,27 +15,24 @@ import androidx.room.PrimaryKey;
  *
  * @author Gaëtan HERFRAY
  */
-@Entity(tableName = "projects")
+@Entity(tableName = "projects",indices = {@Index(value = {"id"}, unique = true)})
 public class Project {
 
     /**
      * The unique identifier of the project
      */
     @PrimaryKey
-    @ColumnInfo(name = "id")
     private final long id;
 
     /**
      * The name of the project
      */
-    @ColumnInfo(name = "name")
     @NonNull
     private final String name;
 
     /**
      * The hex (ARGB) code of the color associated to the project
      */
-    @ColumnInfo(name = "color")
     @ColorInt
     private final int color;
 

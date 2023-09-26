@@ -5,6 +5,7 @@ import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.Query;
+import androidx.room.Update;
 
 
 import com.cleanup.todoc.models.Task;
@@ -21,5 +22,6 @@ public interface TaskDao {
     LiveData<List<Task>> getTasks();
     @Query("SELECT * FROM tasks WHERE id= :id")
     LiveData<Task> getTaskById(long id);
-
+    @Update
+    void updateTask(Task task);
 }

@@ -15,27 +15,27 @@ import java.util.concurrent.Executor;
 
 public class MainViewModel extends ViewModel {
     // TODO: Implement the ViewModel
-    private TaskDataRepository taskDataRepository;
-    private final ProjectDataRepositpry projectDataRepositpry;
+    /*private TaskDataRepository taskDataRepository;
+    private final ProjectDataRepository projectDataRepository;
     private final Executor executor;
 
     //DATA
     @Nullable
     private LiveData<Task> currentTask;
 
-    public MainViewModel(TaskDataRepository taskDataRepository, ProjectDataRepositpry projectDataRepositpry, Executor executor) {
+    public MainViewModel(TaskDataRepository taskDataRepository, ProjectDataRepository projectDataRepository, Executor executor) {
         this.taskDataRepository = taskDataRepository;
-        this.projectDataRepositpry = projectDataRepositpry;
+        this.projectDataRepository = projectDataRepository;
         this.executor = executor;
     }
     public void init(){
         TodocDatabase.getInstance(MainFragment.newInstance().getContext());
     }
 
-    public MainViewModel(TaskDataRepository taskDataRepository, ProjectDataRepositpry projectDataRepositpry, Executor executor, @NonNull Closeable... closeables) {
+    public MainViewModel(TaskDataRepository taskDataRepository, ProjectDataRepository projectDataRepository, Executor executor, @NonNull Closeable... closeables) {
         super(closeables);
         this.taskDataRepository = taskDataRepository;
-        this.projectDataRepositpry = projectDataRepositpry;
+        this.projectDataRepository = projectDataRepository;
         this.executor = executor;
     }
     public void  createTask(long id,long projectID,String text,long creationTimestamp){
@@ -46,4 +46,7 @@ public class MainViewModel extends ViewModel {
     public void  deleteTask(Task task){
         executor.execute(()-> taskDataRepository.deleteTask(task));
     }
+    public void updateTask(Task task){
+        executor.execute(()-> taskDataRepository.updateTask(task));
+    }*/
 }

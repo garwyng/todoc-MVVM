@@ -28,4 +28,6 @@ public class TaskDataRepository {
     public void deleteTask(Task task) {
         this.taskDao.deleteTask(task);
     }
+
+    public void updateTask(Task task) { this.taskDao.updateTask(task);}
 }

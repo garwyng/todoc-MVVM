@@ -65,13 +65,23 @@ public abstract class TodocDatabase extends RoomDatabase {
                 public void onCreate(@NonNull SupportSQLiteDatabase db) {
 
                     super.onCreate(db);
-                    JsonReader jsonReader = new JsonReader();
-                    List<Task> tasks = jsonReader.getTaskListFromFile();
+
+                    JsonReader jsonReaderProject = new JsonReader();
+                    List<Project> projects = jsonReaderProject.getProjectsListFromFile();
+                    Log.d("TASKS", "onCreate: "+ projects);
+                    for (Project project: projects
+                    ) {
+                        INSTANCE.daoProject().insertProject(project);
+                    }
+
+                    JsonReader jsonReaderTask = new JsonReader();
+                    List<Task> tasks = jsonReaderTask.getTaskListFromFile();
                     Log.d("TASKS", "onCreate: "+ tasks);
                     for (Task task: tasks
                          ) {
                         INSTANCE.daoTask().insertTask(task);
                     }
+
                 }
 
             };
