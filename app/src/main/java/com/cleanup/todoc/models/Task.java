@@ -17,17 +17,21 @@ import java.util.List;
  *
  * @author Gaëtan HERFRAY
  */
-@Entity(indices = @Index(value = {"projectId"}, unique = true),
-        foreignKeys = @ForeignKey(
+@Entity(tableName = "task_table",
+        foreignKeys = {@ForeignKey(
                 entity = Project.class,
-                parentColumns = "id",
-                childColumns = "projectId"),
-        tableName = "tasks")
+                parentColumns = "p_project_id",
+                childColumns = "t_projectId",
+                onDelete = ForeignKey.CASCADE,
+                onUpdate = ForeignKey.CASCADE
+        )},indices = {@Index(value = {"t_projectId"},unique = true)}
+        )
 public class Task {
     /**
      * The unique identifier of the task
      */
     @PrimaryKey(autoGenerate = true)
+    @ColumnInfo(name = "id")
     private long id;
 
     public long getProjectId() {
@@ -41,7 +45,7 @@ public class Task {
     /**
      * The unique identifier of the project associated to the task
      */
-
+    @ColumnInfo(name = "t_projectId")
     private long projectId;
 
     /**

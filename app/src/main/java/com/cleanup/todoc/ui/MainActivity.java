@@ -3,9 +3,13 @@ package com.cleanup.todoc.ui;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
 
+import android.content.Context;
 import android.content.DialogInterface;
+import android.content.res.Resources;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -15,9 +19,16 @@ import android.widget.EditText;
 import android.widget.Spinner;
 
 import com.cleanup.todoc.R;
+import com.cleanup.todoc.database.RoomDatabaseInitializer;
+import com.cleanup.todoc.database.TaskDao;
+import com.cleanup.todoc.database.TodocDatabase;
 import com.cleanup.todoc.models.Project;
 import com.cleanup.todoc.models.Task;
+import com.google.gson.Gson;
 
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.util.Calendar;
 import java.util.Date;
 
 public class MainActivity extends AppCompatActivity {
@@ -26,35 +37,17 @@ public class MainActivity extends AppCompatActivity {
     private Spinner dialogSpinner;
     private AlertDialog dialog;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-    }
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.actions, menu);
-        return true;
+        TodocDatabase.getInstance(this.getApplicationContext()).daoProject().insert(new Project(4L,"Test insertion Project", 200200200));
+        getSupportFragmentManager().beginTransaction().add(MainFragment.getInstanceFragment(),"fragment_main").commitNow();
+
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
 
-        if (id == R.id.filter_alphabetical) {
-            sortMethod = SortMethod.ALPHABETICAL;
-        } else if (id == R.id.filter_alphabetical_inverted) {
-            sortMethod = SortMethod.ALPHABETICAL_INVERTED;
-        } else if (id == R.id.filter_oldest_first) {
-            sortMethod = SortMethod.OLD_FIRST;
-        } else if (id == R.id.filter_recent_first) {
-            sortMethod = SortMethod.RECENT_FIRST;
-        }
-
-        updateTasks();
-
-        return super.onOptionsItemSelected(item);
-    }
     /**
      * Called when the user clicks on the positive button of the Create Task Dialog.
      *
@@ -89,7 +82,7 @@ public class MainActivity extends AppCompatActivity {
                         new Date().getTime()
                 );
 
-                addTask(task);
+               // MainViewModel.createTask(task);
 
                 dialogInterface.dismiss();
             }
@@ -115,7 +108,7 @@ public class MainActivity extends AppCompatActivity {
         dialogEditText = dialog.findViewById(R.id.txt_task_name);
         dialogSpinner = dialog.findViewById(R.id.project_spinner);
 
-        populateDialogSpinner();
+        //populateDialogSpinner();
     }
     /**
      * Returns the dialog allowing the user to create a new task.
@@ -162,12 +155,12 @@ public class MainActivity extends AppCompatActivity {
     /**
      * Sets the data of the Spinner with projects to associate to a new task
     */
-    private void populateDialogSpinner() {
-        final ArrayAdapter<Project> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, allProjects
+   /* private void populateDialogSpinner() {
+        final ArrayAdapter<Project> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, MainViewModel.allProjects
         );
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         if (dialogSpinner != null) {
             dialogSpinner.setAdapter(adapter);
         }
-    }
+    }*/
 }

@@ -1,37 +1,36 @@
-{
-  "data": [
+[
     {
-      "id": "1",
-      "projectId": "1",
+      "id": "1L",
+      "projectId": "1L",
       "taskName": "Ajouter un header sur le site",
       "creationTimestamp": "1L"
 
     },
     {
-      "id": "2",
-      "projectId": "2",
+      "id": "2L",
+      "projectId": "2L",
       "name": "Modifier la couleur des textes",
       "creationTimestamp": "1L"
     },
     {
-      "id": "3",
-      "projectId": "2",
+      "id": "3L",
+      "projectId": "2L",
       "name": "Appeler le client",
       "creationTimestamp": "1L"
     },
     {
-      "id": "4",
-      "projectId": "1",
+      "id": "4L",
+      "projectId": "1L",
       "name": "Intégrer Google Analytics",
       "creationTimestamp": "1L"
 
     },
     {
-      "id": "5",
-      "projectId": "3",
+      "id": "5L",
+      "projectId": "3L",
       "taskName": "Ajouter un header sur le site",
       "creationTimestamp": "1L"
 
     }
   ]
-}
+

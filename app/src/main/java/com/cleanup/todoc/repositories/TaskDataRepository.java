@@ -18,7 +18,7 @@ public class TaskDataRepository {
     }
 
     public LiveData<Task> getTask(Long TaskId){return  this.taskDao.getTaskById(TaskId);}
-    public List<Task> getTasks(){return TodocDatabase.getInstance(MainFragment.newInstance().getContext()).daoTask().getTasks().getValue();
+    public List<Task> getTasks(){return TodocDatabase.getInstance(MainFragment.getInstanceFragment().getContext()).daoTask().getAll();
     }
 
     public void addTask(Task task) {
