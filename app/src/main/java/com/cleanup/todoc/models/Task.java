@@ -34,6 +34,15 @@ public class Task {
     @ColumnInfo(name = "id")
     private long id;
 
+    /**
+     * Sets the unique identifier of the task.
+     *
+     * @param id the unique idenifier of the task to set
+     */
+    private void setId(long id) {
+        this.id = id;
+    }
+
     public long getProjectId() {
         return projectId;
     }
@@ -70,7 +79,7 @@ public class Task {
      * @param name              the name of the task to set
      * @param creationTimestamp the timestamp when the task has been created to set
      */
-    public Task(long id, long projectId, @NonNull String name, long creationTimestamp) {
+    public Task(long id,long projectId, @NonNull String name, long creationTimestamp) {
         this.setId(id);
         this.setProjectId(projectId);
         this.setName(name);
@@ -86,14 +95,7 @@ public class Task {
         return id;
     }
 
-    /**
-     * Sets the unique identifier of the task.
-     *
-     * @param id the unique idenifier of the task to set
-     */
-    private void setId(long id) {
-        this.id = id;
-    }
+
 
     /**
      * Sets the unique identifier of the project associated to the task.
@@ -182,3 +184,4 @@ public class Task {
         }
     }
 }
+

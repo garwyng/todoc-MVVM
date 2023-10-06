@@ -13,7 +13,8 @@ public class ProjectDataRepository {
         this.projectDao = projectDao;
     }
 
-   public Project getProject(long projectId){return this.projectDao.getProjectById(projectId);}
+    public Project getProjectById(long projectId){return this.projectDao.getProjectById(projectId);}
     public List<Project> getAllProject() {return  this.projectDao.getAllProjects();
     }
+    public void insert(Project project) {this.projectDao.insert(project);}
 }

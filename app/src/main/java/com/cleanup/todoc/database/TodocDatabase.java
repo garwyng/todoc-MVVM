@@ -57,7 +57,6 @@ public abstract class TodocDatabase extends RoomDatabase {
             INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
                             TodocDatabase.class, DATABASE_NAME)
                     .allowMainThreadQueries()
-                    .fallbackToDestructiveMigration()
                     .addCallback(prepopulateDatabase(context,INSTANCE))
                     .build();
             Log.d("instance", "getInstance:2 " + INSTANCE);
@@ -76,50 +75,6 @@ public abstract class TodocDatabase extends RoomDatabase {
 
                 super.onCreate(db);
 
-                boolean alreadyInTransaction = db.inTransaction();
-                Gson gson = new Gson();
-                InputStream inputStream = context.getResources().openRawResource(R.raw.projects);
-                InputStreamReader reader = new InputStreamReader(inputStream);
-                try {
-                    Project[] projects = gson.fromJson(reader, Project[].class);
-
-                    for (Project project : projects) {
-                        INSTANCE.daoProject().insert(new Project(project.getId(),project.getName(),project.getColor()));
-                    }
-                    if (!alreadyInTransaction) {
-                        db.setTransactionSuccessful();
-                        db.endTransaction();
-                    }
-
-                    reader.close();
-                } catch (IOException e) {
-                    // Handle any exceptions that may occur during parsing or database insertion
-                    e.printStackTrace();
-                }
-
-
-            }
-            @Override
-            public void onOpen(SupportSQLiteDatabase db) {
-                super.onOpen(db);
-                /* Here? always checks that correct number of projects exist
-                 * Most flexible option but least efficient
-                 * i.e. Called whenever DB is opened
-                 * doesn't need DB version change to introduce changed projects as
-                 * adding new project with new APK will cause new project to be loaded
-                 */
-                Cursor csr = db.query("SELECT count(*) FROM " + Project.TABLE_NAME);
-                if (csr.moveToFirst()) {
-                    long row_count = csr.getLong(0);
-                    if (row_count != Project.DEFINED_PROJECTS.length) prepopulateDatabase(context,INSTANCE);
-                }
-                csr.close();
-            }
-
-            @Override
-            public void onDestructiveMigration(SupportSQLiteDatabase db) {
-                super.onDestructiveMigration(db);
-                prepopulateDatabase(context,INSTANCE); //<<<<< or Here?
             }
 
         };

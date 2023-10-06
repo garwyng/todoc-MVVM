@@ -1,34 +1,26 @@
 package com.cleanup.todoc.ui;
 
-import androidx.appcompat.app.AlertDialog;
-import androidx.lifecycle.ViewModel;
-import androidx.lifecycle.ViewModelProvider;
-
-import android.content.Context;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.Spinner;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
+
 import com.cleanup.todoc.R;
-import com.cleanup.todoc.database.ProjectDao;
-import com.cleanup.todoc.database.TodocDatabase;
-import com.cleanup.todoc.models.Project;
+import com.cleanup.todoc.databinding.FragmentMainBinding;
 import com.cleanup.todoc.models.Task;
 import com.cleanup.todoc.repositories.ProjectDataRepository;
 import com.cleanup.todoc.repositories.TaskDataRepository;
 
-import java.util.concurrent.Executors;
-
 public class MainFragment extends Fragment implements TasksAdapter.DeleteTaskListener {
-
+    private FragmentMainBinding binding;
     private static MainFragment INSTANCE_FRAGMENT;
     private MainFragmentViewModel mViewModel;
     private EditText dialogEditText;
@@ -36,7 +28,7 @@ public class MainFragment extends Fragment implements TasksAdapter.DeleteTaskLis
     private AlertDialog dialog;
     private ProjectDataRepository projectDataRepository;
     private TaskDataRepository taskDataRepository;
-    private MainFragmentViewModel MainFragmentViewModel;
+    private MainFragmentViewModel mainFragmentViewModel;
 
 
     public MainFragment() {
@@ -62,75 +54,48 @@ public class MainFragment extends Fragment implements TasksAdapter.DeleteTaskLis
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
+        binding = FragmentMainBinding.inflate(inflater,container,false);
         configureViewModel();
-        return inflater.inflate(R.layout.fragment_main, container, false);
+        View view = binding.getRoot();
+        dialogSpinner = binding.getRoot().findViewById(R.id.project_spinner);
+        return view;
+
     }
 
     private void configureViewModel() {
-        this.MainFragmentViewModel = new ViewModelProvider(this, ViewModelFactory.getInstance(this.getContext())).get(MainFragmentViewModel.class);
+        this.mainFragmentViewModel = new ViewModelProvider(this, ViewModelFactory.getInstance(this.getContext())).get(MainFragmentViewModel.class);
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-
         mViewModel = new ViewModelProvider(this).get(MainFragmentViewModel.class);
-        // TODO: Use the ViewModel
 
+        mViewModel.init();
+        if (binding != null && binding.fabAddTask != null) {
+            // Access fabAddTask here
+            binding.fabAddTask.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    showAddTaskDialog();
 
-        /**
-         * Called when the user clicks on the positive button of the Create Task Dialog.
-         *
-         * @param dialogInterface the current displayed dialog
-         */
-
-        /*private void onPositiveButtonClick(DialogInterface dialogInterface) {
-            // If dialog is open
-            if (dialogEditText != null && dialogSpinner != null) {
-                // Get the name of the task
-                String taskName = dialogEditText.getText().toString();
-
-                // Get the selected project to be associated to the task
-                Project taskProject = null;
-                if (dialogSpinner.getSelectedItem() instanceof Project) {
-                    taskProject = (Project) dialogSpinner.getSelectedItem();
                 }
-
-                // If a name has not been set
-                if (taskName.trim().isEmpty()) {
-                    dialogEditText.setError(getString(R.string.empty_task_name));
-                }
-                // If both project and name of the task have been set
-                else if (taskProject != null) {
-                    // TODO: Replace this by id of persisted task
-                    long id = (long) (Math.random() * 50000);
-
-
-                    Task task = new Task(
-                            id,
-                            taskProject.getId(),
-                            taskName,
-                            new Date().getTime()
-                    );
-
-                    addTask(task);
-
-                    dialogInterface.dismiss();
-                }
-                // If name has been set, but project has not been set (this should never occur)
-                else{
-                    dialogInterface.dismiss();
-                }
-            }
-            // If dialog is aloready closed
-            else {
-                dialogInterface.dismiss();
-            }
-        }*/
+            });
+        }
     }
 
     @Override
     public void onDeleteTask(Task task) {
+        mViewModel.deleteTask(task);
+    }
+    public void showAddTaskDialog() {
+        final AlertDialog dialog = mViewModel.getAddTaskDialog();
 
+        dialog.show();
+
+        //dialogEditText = dialog.findViewById(R.id.txt_task_name);
+        //dialogSpinner = dialog.findViewById(R.id.project_spinner);
+
+        mViewModel.populateDialogSpinner();
     }
 }
