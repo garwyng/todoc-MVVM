@@ -18,17 +18,10 @@ import java.io.OptionalDataException;
  * @author Gaëtan HERFRAY
  */
 @Entity(tableName = "projects_table")
-
 public class Project {
 
-
-    public static final Project[] DEFINED_PROJECTS = {
-            new Project(1L, "Project 1", 0xFFEADAD1),
-            new Project(2L, "Project 2", 0xFFB4CDBA),
-            new Project(3L, "Project 3", 0xFFA3CED2)
-    };
     public static final String TABLE_NAME = "projects_table";
-    public static final String ID_COLUMN_NAME = "p_project_id";
+    public static final String ID_COLUMN_NAME = "id";
     public static final String NAME_COLUMN_NAME = "name"; //<<<<< not the wisest choice of column name as is an SQLite KEYWORD
     public static final String COLOR_COLUMN_NAME = "color";
     public static final String PREFIX = "_project_";
@@ -36,7 +29,6 @@ public class Project {
      * The unique identifier of the project
      */
     @PrimaryKey
-    @ColumnInfo(name = "p_project_id")
     private final long id;
 
     /**

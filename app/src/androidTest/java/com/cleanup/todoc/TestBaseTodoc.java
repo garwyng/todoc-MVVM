@@ -44,7 +44,7 @@ public class TestBaseTodoc {
     }
     @Test
     public void getProjectTest() throws Exception{
-        List<Project> projects = this.database.daoProject().getAllProjects();
+        List<Project> projects =  this.database.daoProject().getAllProjects();
 
         Assert.assertEquals(3,projects.size());
 
@@ -52,7 +52,7 @@ public class TestBaseTodoc {
     @Test
     public void insertProjectTest()throws Exception{
         this.database.daoProject().insert(projectTest);
-       List<Project> projects = this.database.daoProject().getAllProjects();
+       List<Project> projects = (List<Project>) this.database.daoProject().getAllProjects();
         Log.d("insertProjectTest", "insertProjectTest: "+projects);
        Assert.assertTrue(projects.listIterator().next().getName().contains(projectTest.getName()));
        Assert.assertEquals(1,projects.size());

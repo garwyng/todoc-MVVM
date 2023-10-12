@@ -7,6 +7,7 @@ import com.cleanup.todoc.database.TaskDao;
 import com.cleanup.todoc.database.TodocDatabase;
 import com.cleanup.todoc.models.Task;
 import com.cleanup.todoc.ui.MainFragment;
+import com.cleanup.todoc.ui.MainFragmentViewModel;
 
 import java.util.List;
 

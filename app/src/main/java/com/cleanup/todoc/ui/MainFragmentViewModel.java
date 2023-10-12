@@ -1,5 +1,7 @@
 package com.cleanup.todoc.ui;
 
+import static com.cleanup.todoc.R.raw.projects;
+
 import android.content.Context;
 import android.content.DialogInterface;
 import android.util.Log;
@@ -15,6 +17,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModel;
+import androidx.room.Ignore;
 
 import com.cleanup.todoc.R;
 import com.cleanup.todoc.database.TodocDatabase;
@@ -28,10 +31,12 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.lang.reflect.Constructor;
 import java.util.Date;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
 
 public class MainFragmentViewModel extends ViewModel {
 
@@ -57,29 +62,34 @@ public class MainFragmentViewModel extends ViewModel {
     }
 
     public void init(){
-        boolean alreadyInTransaction = db.inTransaction();
+        Log.d("prepolulate", "onCreate:1 ");
+        //executor.execute(()-> INSTANCE.daoProject().insert(new Project(1,"test",-64112502)));
+        Log.d("prepolulate", "onCreate:2 ");
         Gson gson = new Gson();
-        InputStream inputStream = context.getResources().openRawResource(R.raw.projects);
+        InputStream inputStream = context.getResources().openRawResource(projects);
         InputStreamReader reader = new InputStreamReader(inputStream);
+        Log.d("prepolulate", "onCreate:3 ");
         try {
             Project[] projects = gson.fromJson(reader, Project[].class);
             db.beginTransaction();
+            Log.d("prepolulate", "onCreate:4 ");
             for (Project project : projects) {
-                executor.execute(()->{
-                    projectDataRepository.insert(project);
-                });
-            }
-            if (!alreadyInTransaction) {
-                db.setTransactionSuccessful();
-                db.endTransaction();
+                Log.d("prepolulate", "onCreate:5 " + project);
+
+                Executors.newSingleThreadExecutor().execute(() -> db.daoProject().insert(new Project(project.getId(),project.getName(),project.getColor())));
+
+                Log.d("prepolulate", "onCreate: 6");
             }
 
             reader.close();
         } catch (IOException e) {
             // Handle any exceptions that may occur during parsing or database insertion
+            Log.d("exceptionPrepolulate", "onCreate: "+e);
             e.printStackTrace();
         }
+        db.endTransaction();
     }
+
     public static void  addTask(Task task){
         executor.execute(()->{
             taskDataRepository.addTask(task);
@@ -95,6 +105,10 @@ public class MainFragmentViewModel extends ViewModel {
         executor.execute(()->{allProjects= projectDataRepository.getAllProject();}
         );
         return allProjects;
+    }
+    public List<Task> getTasks() {
+        List<Task> task = taskDataRepository.getTasks();
+        return task;
     }
     /**
      * Returns the dialog allowing the user to create a new task.
@@ -157,7 +171,7 @@ public class MainFragmentViewModel extends ViewModel {
             }
             // If both project and name of the task have been set
             else if (taskProject != null) {
-                long id=0;
+                long id = MainFragmentViewModel.taskDataRepository.getTasks().size() + 1;
                 Task task = new Task(id,
                         taskProject.getId(),
                         taskName,
@@ -177,22 +191,7 @@ public class MainFragmentViewModel extends ViewModel {
             dialogInterface.dismiss();
         }
     }
-    /**
-     * Sets the data of the Spinner with projects to associate to a new task
-     */
-    public void populateDialogSpinner() {
-        List<Project> projects = projectDataRepository.getAllProject();
-        if (projects != null && !projects.isEmpty()) {
-            ArrayAdapter<Project> adapter = new ArrayAdapter<>(context, android.R.layout.simple_spinner_item, projects);
-            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-            if (dialogSpinner != null) {
-                dialogSpinner.setAdapter(adapter);
-            } else {
-                Log.e("SpinnerError", "dialogSpinner is null.");
-            }
-        } else {
-            Log.e("SpinnerError", "No projects found.");
-        }
-    }
+
+
 
 }

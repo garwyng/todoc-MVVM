@@ -33,7 +33,7 @@ public interface TaskDao {
             Project.TABLE_NAME +"." + Project.NAME_COLUMN_NAME + " AS " + Project.PREFIX + Project.NAME_COLUMN_NAME + ", " +
             Project.TABLE_NAME +"." + Project.COLOR_COLUMN_NAME + " AS " + Project.PREFIX + Project.COLOR_COLUMN_NAME + " " +
             "FROM task_table " +
-            "JOIN " + Project.TABLE_NAME + " ON task_table.t_projectId = " + Project.TABLE_NAME + "." + Project.ID_COLUMN_NAME + ";"
+            "JOIN " + Project.TABLE_NAME + " ON task_table.projectId = " + Project.TABLE_NAME + "." + Project.ID_COLUMN_NAME + ";"
     )
     List<TaskWithProject> getAllTasksWithProjects();
     @Query("SELECT * From task_table WHERE id= :taskId")

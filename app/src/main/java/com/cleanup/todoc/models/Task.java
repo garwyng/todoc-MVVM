@@ -20,18 +20,18 @@ import java.util.List;
 @Entity(tableName = "task_table",
         foreignKeys = {@ForeignKey(
                 entity = Project.class,
-                parentColumns = "p_project_id",
-                childColumns = "t_projectId",
+                parentColumns = "id",
+                childColumns = "projectId",
                 onDelete = ForeignKey.CASCADE,
                 onUpdate = ForeignKey.CASCADE
-        )},indices = {@Index(value = {"t_projectId"},unique = true)}
+        )},indices = {@Index(value = {"projectId"},unique = true)}
         )
 public class Task {
     /**
      * The unique identifier of the task
      */
+    @NonNull
     @PrimaryKey(autoGenerate = true)
-    @ColumnInfo(name = "id")
     private long id;
 
     /**
@@ -54,7 +54,7 @@ public class Task {
     /**
      * The unique identifier of the project associated to the task
      */
-    @ColumnInfo(name = "t_projectId")
+    @NonNull
     private long projectId;
 
     /**
@@ -69,6 +69,7 @@ public class Task {
     /**
      * The timestamp when the task has been created
      */
+    @NonNull
     private long creationTimestamp;
 
     /**
@@ -80,9 +81,9 @@ public class Task {
      * @param creationTimestamp the timestamp when the task has been created to set
      */
     public Task(long id,long projectId, @NonNull String name, long creationTimestamp) {
-        this.setId(id);
-        this.setProjectId(projectId);
-        this.setName(name);
+        this.id =id;
+        this.projectId = projectId;
+        this.name = name;
         this.setCreationTimestamp(creationTimestamp);
     }
 
@@ -184,4 +185,3 @@ public class Task {
         }
     }
 }
-
