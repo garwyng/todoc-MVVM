@@ -24,10 +24,6 @@ public interface TaskDao {
 
     @Delete
     void deleteTask(Task task);
-
-    /*
-        <<<<<ADDED>>>>> to get All Tasks with the Project
-    */
     @Query("SELECT task_table.*," +
             Project.TABLE_NAME +"." + Project.ID_COLUMN_NAME +" AS " + Project.PREFIX + Project.ID_COLUMN_NAME + "," +
             Project.TABLE_NAME +"." + Project.NAME_COLUMN_NAME + " AS " + Project.PREFIX + Project.NAME_COLUMN_NAME + ", " +

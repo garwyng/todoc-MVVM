@@ -22,9 +22,9 @@ import java.util.List;
 
 @RunWith(AndroidJUnit4.class)
 public class TestBaseTodoc {
-    private long TASK_ID = 1;
+    private long TASK_ID = 0;
     private Task TASK_DEMO = new Task(TASK_ID,1,"test", Calendar.getInstance().getTime().getTime());
-    private Project projectTest = new Project(1,"test",250200200);
+    private Project projectTest = new Project(4,"test",2502002);
 
     private TodocDatabase database;
 
@@ -61,8 +61,9 @@ public class TestBaseTodoc {
     public void addTaskTest() throws InterruptedException{
         this.database.daoTask().insertTask(TASK_DEMO);
 
-        Task task = LiveDataTestUtil.getValue(this.database.daoTask().getTaskById(TASK_ID));
+        List<Task> tasks = this.database.daoTask().getAll();
+        Assert.assertTrue(tasks.contains(TASK_DEMO));
 
-        Assert.assertTrue(task.getName().equals(TASK_DEMO.getName()));
+       // Assert.assertTrue(task.getName().equals(TASK_DEMO.getName()));
     }
 }

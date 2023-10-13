@@ -21,9 +21,7 @@ import java.util.List;
         foreignKeys = {@ForeignKey(
                 entity = Project.class,
                 parentColumns = "id",
-                childColumns = "projectId",
-                onDelete = ForeignKey.CASCADE,
-                onUpdate = ForeignKey.CASCADE
+                childColumns = "projectId"
         )},indices = {@Index(value = {"projectId"},unique = true)}
         )
 public class Task {
@@ -63,7 +61,6 @@ public class Task {
     // Suppress warning because setName is called in constructor
     @SuppressWarnings("NullableProblems")
     @NonNull
-
     private String name;
 
     /**

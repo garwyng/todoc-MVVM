@@ -86,8 +86,8 @@ public class MainFragment extends Fragment implements TasksAdapter.DeleteTaskLis
 
         mViewModel = new ViewModelProvider(this).get(MainFragmentViewModel.class);
         List<Project> projectList = mViewModel.getAllProject();
-        if (projectList == null){
-        mViewModel.init();}
+        //if (projectList == null){
+        //mViewModel.init();}
 
         if (binding != null && binding.fabAddTask != null) {
             // Access fabAddTask here

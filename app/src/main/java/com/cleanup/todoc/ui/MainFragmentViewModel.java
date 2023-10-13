@@ -62,32 +62,7 @@ public class MainFragmentViewModel extends ViewModel {
     }
 
     public void init(){
-        Log.d("prepolulate", "onCreate:1 ");
-        //executor.execute(()-> INSTANCE.daoProject().insert(new Project(1,"test",-64112502)));
-        Log.d("prepolulate", "onCreate:2 ");
-        Gson gson = new Gson();
-        InputStream inputStream = context.getResources().openRawResource(projects);
-        InputStreamReader reader = new InputStreamReader(inputStream);
-        Log.d("prepolulate", "onCreate:3 ");
-        try {
-            Project[] projects = gson.fromJson(reader, Project[].class);
-            db.beginTransaction();
-            Log.d("prepolulate", "onCreate:4 ");
-            for (Project project : projects) {
-                Log.d("prepolulate", "onCreate:5 " + project);
 
-                Executors.newSingleThreadExecutor().execute(() -> db.daoProject().insert(new Project(project.getId(),project.getName(),project.getColor())));
-
-                Log.d("prepolulate", "onCreate: 6");
-            }
-
-            reader.close();
-        } catch (IOException e) {
-            // Handle any exceptions that may occur during parsing or database insertion
-            Log.d("exceptionPrepolulate", "onCreate: "+e);
-            e.printStackTrace();
-        }
-        db.endTransaction();
     }
 
     public static void  addTask(Task task){

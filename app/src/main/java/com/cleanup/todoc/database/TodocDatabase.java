@@ -11,17 +11,14 @@ import androidx.room.Room;
 import androidx.room.RoomDatabase;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
-import com.cleanup.todoc.R;
 import com.cleanup.todoc.models.Project;
 import com.cleanup.todoc.models.Task;
 import com.cleanup.todoc.repositories.ProjectDataRepository;
 import com.google.gson.Gson;
 
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.util.concurrent.Callable;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
@@ -39,7 +36,6 @@ public abstract class TodocDatabase extends RoomDatabase {
 
     public static synchronized TodocDatabase getInstance(Context context) {
         if (INSTANCE == null) {
-            Log.d("instance", "getInstance: 1"+context);
             contextAPP= context.getApplicationContext();
             INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
                             TodocDatabase.class, DATABASE_NAME)
@@ -49,18 +45,33 @@ public abstract class TodocDatabase extends RoomDatabase {
                     .build();
             Log.d("instance", "getInstance:2 " + INSTANCE);
         }
-        Log.d("instance", "getInstance:3 ");
         return INSTANCE;
     }
 
-    private static Callback prepopulateDatabase() {
+    private static RoomDatabase.Callback prepopulateDatabase() {
 
         return new Callback() {
             @Override
-            public void onCreate(@NonNull SupportSQLiteDatabase db) {
+            public void onCreate(@NonNull SupportSQLiteDatabase db){
                 super.onCreate(db);
+                Gson gson = new Gson();
+                InputStream inputStream = contextAPP.getResources().openRawResource(projects);
+                InputStreamReader reader = new InputStreamReader(inputStream);
 
-            }};
+                try {
+                    Project[] projects = gson.fromJson(reader, Project[].class);
+
+                    for (Project project : projects) {
+                        Executors.newSingleThreadExecutor().execute(() -> INSTANCE.daoProject().insert(new Project(project.getId(),project.getName(),project.getColor())));
+                    }
+                    reader.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+
+        };
+
     }
 }
 
