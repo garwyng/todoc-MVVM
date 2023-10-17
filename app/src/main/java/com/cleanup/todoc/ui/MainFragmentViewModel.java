@@ -90,6 +90,7 @@ public class MainFragmentViewModel extends ViewModel {
      *
      * @return the dialog allowing the user to create a new task
      */
+    /*
     @NonNull
     public AlertDialog getAddTaskDialog() {
         final AlertDialog.Builder alertBuilder = new AlertDialog.Builder(MainFragment.getInstanceFragment().getContext(), R.style.Dialog);
@@ -147,11 +148,10 @@ public class MainFragmentViewModel extends ViewModel {
             // If both project and name of the task have been set
             else if (taskProject != null) {
                 long id = MainFragmentViewModel.taskDataRepository.getTasks().size() + 1;
-                Task task = new Task(id,
+                Task task = new Task(
                         taskProject.getId(),
                         taskName,
-                        new Date().getTime()
-                );
+                        new Date().getTime());
                 addTask(task);
 
                 dialogInterface.dismiss();
@@ -165,7 +165,7 @@ public class MainFragmentViewModel extends ViewModel {
         else {
             dialogInterface.dismiss();
         }
-    }
+    }*/
 
 
 

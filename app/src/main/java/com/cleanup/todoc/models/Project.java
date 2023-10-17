@@ -22,7 +22,7 @@ public class Project {
 
     public static final String TABLE_NAME = "projects_table";
     public static final String ID_COLUMN_NAME = "id";
-    public static final String NAME_COLUMN_NAME = "name"; //<<<<< not the wisest choice of column name as is an SQLite KEYWORD
+    public static final String NAME_COLUMN_NAME = "name";
     public static final String COLOR_COLUMN_NAME = "color";
     public static final String PREFIX = "_project_";
     /**

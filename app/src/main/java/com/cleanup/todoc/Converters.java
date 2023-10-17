@@ -7,7 +7,7 @@ import com.cleanup.todoc.models.Project;
 public class Converters {
     @TypeConverter
     public static Project projectFromIdProject(Long id) {
-        return id ==null ? null : Project.getProjectById(id);
+        return id ==null ? null : Project.getProjectById(id);//mettre le dao qui va bien
     }
     @TypeConverter
     public static long idFromProject(Project project) {
