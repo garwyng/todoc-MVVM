@@ -7,6 +7,7 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -17,16 +18,18 @@ import android.widget.Spinner;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.cleanup.todoc.R;
 import com.cleanup.todoc.databinding.FragmentMainBinding;
 import com.cleanup.todoc.models.Project;
 import com.cleanup.todoc.models.Task;
-import com.cleanup.todoc.repositories.ProjectDataRepository;
-import com.cleanup.todoc.repositories.TaskDataRepository;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -36,10 +39,6 @@ public class MainFragment extends androidx.fragment.app.Fragment implements Task
     private MainFragmentViewModel mViewModel;
     private EditText dialogEditText;
     private Spinner dialogSpinner;
-    private ProjectDataRepository projectDataRepository;
-    private TaskDataRepository taskDataRepository;
-    private MainFragmentViewModel mainFragmentViewModel;
-    private RecyclerView mRecyclerView;
 
 
     public MainFragment() {
@@ -52,6 +51,12 @@ public class MainFragment extends androidx.fragment.app.Fragment implements Task
         }
         return INSTANCE_FRAGMENT;
     }
+
+    /**
+     * List of all current tasks of the application
+     */
+    @NonNull
+    private List<Task> tasks = new ArrayList<>();
 
 
     /**
@@ -66,24 +71,42 @@ public class MainFragment extends androidx.fragment.app.Fragment implements Task
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         configureViewModel();
+
         binding = FragmentMainBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
+        Context context = this.getContext();
         dialogSpinner = binding.getRoot().findViewById(R.id.project_spinner);
-        Context context = view.getContext();
-
+        Log.d("TASK_VALEUR", "onActivityCreated: "+ tasks);
+        final Observer<Task> taskObserver = new Observer<Task>() {
+            @Override
+            public void onChanged(Task task) {
+                binding.listTasks.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.VERTICAL,false));
+                binding.listTasks.setAdapter(new TasksAdapter((List<Task>) mViewModel.getTasks(),MainFragment.this::onDeleteTask));
+            }
+        };
+        mViewModel.getTasks();
         return view;
 
     }
+
     private void configureViewModel() {
-        this.mainFragmentViewModel = new ViewModelProvider(this, ViewModelFactory.getInstance(this.getContext())).get(MainFragmentViewModel.class);
+        this.mViewModel = new ViewModelProvider(this, ViewModelFactory.getInstance(this.getContext())).get(MainFragmentViewModel.class);
     }
+
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
         mViewModel = new ViewModelProvider(this).get(MainFragmentViewModel.class);
-        List<Project> projectList = mViewModel.getAllProject();
+
+        mViewModel.getTasks().observe(getViewLifecycleOwner(), new Observer<List<Task>>() {
+            @Override
+            public void onChanged(List<Task> taskList) {
+                MutableLiveData<List<Task>> mutableLiveDataTasks = new MutableLiveData<>(tasks);
+            }
+        });
+
 
         if (binding != null && binding.fabAddTask != null) {
             // Access fabAddTask here
@@ -116,19 +139,24 @@ public class MainFragment extends androidx.fragment.app.Fragment implements Task
      * Sets the data of the Spinner with projects to associate to a new task
      */
     public void populateDialogSpinner() {
-        List<Project> projects = mViewModel.getAllProject();
-        if (projects != null && !projects.isEmpty()) {
-            ArrayAdapter<Project> adapter = new ArrayAdapter<>(this.getContext(), android.R.layout.simple_spinner_item, mViewModel.getAllProject());
-            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-            if (dialogSpinner != null) {
-                dialogSpinner.setAdapter(adapter);
-            } else {
-                Log.e("SpinnerError", "dialogSpinner is null.");
+        mViewModel.getProjects().observe(getViewLifecycleOwner(), new Observer<List<Project>>() {
+            @Override
+            public void onChanged(List<Project> projects) {
+                if (projects != null && !projects.isEmpty()) {
+                    ArrayAdapter<Project> adapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, mViewModel.getProjects().getValue());
+                    adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    if (dialogSpinner != null) {
+                        dialogSpinner.setAdapter(adapter);
+                    } else {
+                        Log.e("SpinnerError", "dialogSpinner is null.");
+                    }
+                } else {
+                    Log.e("SpinnerError", "No projects found.");
+                }
             }
-        } else {
-            Log.e("SpinnerError", "No projects found.");
-        }
+        });
     }
+
     /**
      * Returns the dialog allowing the user to create a new task.
      *
@@ -136,7 +164,7 @@ public class MainFragment extends androidx.fragment.app.Fragment implements Task
      */
     @NonNull
     public AlertDialog getAddTaskDialog() {
-        final AlertDialog.Builder alertBuilder = new AlertDialog.Builder(MainFragment.getInstanceFragment().getContext(), R.style.Dialog);
+        final AlertDialog.Builder alertBuilder = new AlertDialog.Builder(this.getContext(), R.style.Dialog);
 
         alertBuilder.setTitle(R.string.add_task);
         alertBuilder.setView(R.layout.dialog_add_task);
@@ -177,6 +205,7 @@ public class MainFragment extends androidx.fragment.app.Fragment implements Task
         if (dialogEditText != null && dialogSpinner != null) {
             // Get the name of the task
             String taskName = dialogEditText.getText().toString();
+            Log.d("tasknameDialog", "onPositiveButtonClick: "+taskName.toString());
 
             // Get the selected project to be associated to the task
             Project taskProject = null;
@@ -195,7 +224,8 @@ public class MainFragment extends androidx.fragment.app.Fragment implements Task
                         taskName,
                         new Date().getTime()
                 );
-                addTask(task);
+                mViewModel.addTask(task);
+
 
                 dialogInterface.dismiss();
             }

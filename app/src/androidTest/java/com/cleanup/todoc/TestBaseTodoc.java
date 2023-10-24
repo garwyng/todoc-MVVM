@@ -7,6 +7,7 @@ import android.util.Log;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule;
+import androidx.lifecycle.LiveData;
 import androidx.room.Room;
 import androidx.test.espresso.internal.inject.InstrumentationContext;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
@@ -58,7 +59,7 @@ public class TestBaseTodoc {
     }
     @Test
     public void getProjectTest() throws Exception{
-        List<Project> projectsList =  this.database.daoProject().getAllProjects();
+        List<Project> projectsList = (List<Project>) this.database.daoProject().getAllProjects();
 
         Assert.assertEquals(projects.size(),projectsList.size());
 
@@ -66,7 +67,7 @@ public class TestBaseTodoc {
     @Test
     public void insertProjectTest()throws Exception{
         this.database.daoProject().insert(projectTest);
-        List<Project> projectList = this.database.daoProject().getAllProjects();
+        List<Project> projectList = (List<Project>) this.database.daoProject().getAllProjects();
        Assert.assertEquals(projects.size() +1,projectList.size());
     }
     @Test

@@ -7,7 +7,6 @@ import com.cleanup.todoc.database.TaskDao;
 import com.cleanup.todoc.database.TodocDatabase;
 import com.cleanup.todoc.models.Task;
 import com.cleanup.todoc.ui.MainFragment;
-import com.cleanup.todoc.ui.MainFragmentViewModel;
 
 import java.util.List;
 
@@ -18,8 +17,8 @@ public class TaskDataRepository {
         this.taskDao = taskDao;
     }
 
-    public LiveData<Task> getTask(Long TaskId){return  this.taskDao.getTaskById(TaskId);}
-    public List<Task> getTasks(){return TodocDatabase.getInstance(MainFragment.getInstanceFragment().getContext()).daoTask().getAll();
+    public LiveData<Task> getATask(Long TaskId){return  this.taskDao.getTaskById(TaskId);}
+    public LiveData<List<Task>> getTasks(TasksCallback tasksCallback){return TodocDatabase.getInstance(MainFragment.getInstanceFragment().getContext()).daoTask().getTasks();
     }
 
     public void addTask(Task task) {
@@ -31,4 +30,7 @@ public class TaskDataRepository {
     }
 
     public void updateTask(Task task) { this.taskDao.updateTask(task);}
+    public interface TasksCallback {
+        void onTasksLoaded(List<Task> tasks);
+    }
 }

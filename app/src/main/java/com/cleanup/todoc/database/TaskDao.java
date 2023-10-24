@@ -16,12 +16,12 @@ import java.util.List;
 
 @Dao
 public interface TaskDao {
+    @Query("SELECT * FROM task_table WHERE projectId = :projectId")
+    LiveData<List<Task>> getTasksByProject(long projectId);
     @Query("SELECT * FROM task_table")
-    List<Task> getAll();
-
+    LiveData<List<Task>> getTasks();
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertTask(Task task);
-
     @Delete
     void deleteTask(Task task);
     @Query("SELECT task_table.*," +
