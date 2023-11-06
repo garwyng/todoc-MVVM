@@ -14,6 +14,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -85,7 +86,7 @@ public class MainFragment extends Fragment implements TasksAdapter.DeleteTaskLis
         super.onActivityCreated(savedInstanceState);
 
         mViewModel = new ViewModelProvider(this).get(MainFragmentViewModel.class);
-        List<Project> projectList = mViewModel.getAllProject();
+        LiveData<List<Project>> projectList = mViewModel.getAllProject();
         //if (projectList == null){
         //mViewModel.init();}
 
@@ -120,9 +121,9 @@ public class MainFragment extends Fragment implements TasksAdapter.DeleteTaskLis
      * Sets the data of the Spinner with projects to associate to a new task
      */
     public void populateDialogSpinner() {
-        List<Project> projects = mViewModel.getAllProject();
-        if (projects != null && !projects.isEmpty()) {
-            ArrayAdapter<Project> adapter = new ArrayAdapter<>(this.getContext(), android.R.layout.simple_spinner_item, mViewModel.getAllProject());
+        LiveData<List<Project>> projects = mViewModel.getAllProject();
+        if (projects != null && !projects.getValue().isEmpty()) {
+            ArrayAdapter<Project> adapter = new ArrayAdapter<>(this.getContext(), android.R.layout.simple_spinner_item, mViewModel.getAllProject().getValue());
             adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             if (dialogSpinner != null) {
                 dialogSpinner.setAdapter(adapter);

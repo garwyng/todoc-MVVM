@@ -41,7 +41,7 @@ import java.util.concurrent.Executors;
 public class MainFragmentViewModel extends ViewModel {
 
 
-    public static List<Project> allProjects;
+    public static LiveData<List<Project>> allProjects;
     // TODO: Implement the ViewModel
     private static TaskDataRepository taskDataRepository;
     private final ProjectDataRepository projectDataRepository;
@@ -76,7 +76,7 @@ public class MainFragmentViewModel extends ViewModel {
     public void updateTask(Task task){
         executor.execute(()-> taskDataRepository.updateTask(task));
     }
-    public List<Project> getAllProject(){
+    public LiveData<List<Project>> getAllProject(){
         executor.execute(()->{allProjects= projectDataRepository.getAllProject();}
         );
         return allProjects;
