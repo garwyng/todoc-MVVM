@@ -22,9 +22,9 @@ import java.util.List;
 
 @RunWith(AndroidJUnit4.class)
 public class TestBaseTodoc {
-    private long TASK_ID = 0;
-    private Task TASK_DEMO = new Task(TASK_ID,1,"test", Calendar.getInstance().getTime().getTime());
-    private Project projectTest = new Project(4,"test",2502002);
+    private final long TASK_ID = 0;
+    private final Task TASK_DEMO = new Task(TASK_ID,1,"test", Calendar.getInstance().getTime().getTime());
+    private final Project projectTest = new Project(4,"test",2502002);
 
     private TodocDatabase database;
 

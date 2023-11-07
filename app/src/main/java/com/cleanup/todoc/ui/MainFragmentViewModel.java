@@ -16,6 +16,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 import androidx.room.Ignore;
 
@@ -41,8 +42,8 @@ import java.util.concurrent.Executors;
 public class MainFragmentViewModel extends ViewModel {
 
 
-    public static LiveData<List<Project>> allProjects;
-    // TODO: Implement the ViewModel
+    private MutableLiveData<List<Project>> allProjects;
+    private MutableLiveData<Project> currentProject;
     private static TaskDataRepository taskDataRepository;
     private final ProjectDataRepository projectDataRepository;
     private static Executor executor;
@@ -50,15 +51,36 @@ public class MainFragmentViewModel extends ViewModel {
     //DATA
     @Nullable
     private LiveData<Task> currentTask;
-    private Context context = MainFragment.getInstanceFragment().getContext();
-    private TodocDatabase db = TodocDatabase.getInstance(context);
+    private final Context context = MainFragment.getInstanceFragment().getContext();
+    private final TodocDatabase db = TodocDatabase.getInstance(context);
     private EditText dialogEditText;
     private Spinner dialogSpinner;
 
     public MainFragmentViewModel(ProjectDataRepository projectDataRepository, TaskDataRepository taskDataRepository, Executor executor) {
-        this.taskDataRepository = taskDataRepository;
+        MainFragmentViewModel.taskDataRepository = taskDataRepository;
         this.projectDataRepository = projectDataRepository;
-        this.executor =executor;
+        MainFragmentViewModel.executor =executor;
+    }
+
+    public MutableLiveData<Project> getCurrentProject() {
+        if (currentProject == null) {
+            currentProject = new MutableLiveData<Project>();
+        }
+
+        return currentProject;
+    }
+
+    public void setCurrentProject(MutableLiveData<Project> currentProject) {
+        this.currentProject = currentProject;
+    }
+
+    public MutableLiveData<List<Project>> getAllProjects() {
+         //allProjects.setValue((projectDataRepository.getAllProject()));
+        return allProjects;
+    }
+
+    public void setAllProjects(MutableLiveData<List<Project>> allProjects) {
+        this.allProjects = allProjects;
     }
 
     public void init(){
@@ -75,11 +97,6 @@ public class MainFragmentViewModel extends ViewModel {
     }
     public void updateTask(Task task){
         executor.execute(()-> taskDataRepository.updateTask(task));
-    }
-    public LiveData<List<Project>> getAllProject(){
-        executor.execute(()->{allProjects= projectDataRepository.getAllProject();}
-        );
-        return allProjects;
     }
     public List<Task> getTasks() {
         List<Task> task = taskDataRepository.getTasks();

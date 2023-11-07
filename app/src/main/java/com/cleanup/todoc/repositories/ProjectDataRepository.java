@@ -16,7 +16,7 @@ public class ProjectDataRepository {
     }
 
     public Project getProjectById(long projectId){return this.projectDao.getProjectById(projectId);}
-    public LiveData<List<Project>> getAllProject() {return this.projectDao.getAllProjects();
+    public List<Project> getAllProject() {return this.projectDao.getAllProjects();
     }
     public void insert(Project project) {this.projectDao.insert(project);}
 }

@@ -19,16 +19,16 @@ import com.google.gson.Gson;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.Arrays;
+import java.util.List;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
 @Database(entities = { Project.class,Task.class}, version = 1, exportSchema = false)
 public abstract class TodocDatabase extends RoomDatabase {
     private static volatile TodocDatabase INSTANCE;
-    private static String DATABASE_NAME = "TODOC_database";
-    private static Executor executor;
+    private static final String DATABASE_NAME = "TODOC_database";
     private static Context contextAPP;
-    private static ProjectDataRepository projectDataRepository;
 
     public abstract ProjectDao daoProject();
 
@@ -57,13 +57,11 @@ public abstract class TodocDatabase extends RoomDatabase {
                 Gson gson = new Gson();
                 InputStream inputStream = contextAPP.getResources().openRawResource(projects);
                 InputStreamReader reader = new InputStreamReader(inputStream);
-
+                Log.d("STAPE1", "onCreate: ");
                 try {
-                    Project[] projects = gson.fromJson(reader, Project[].class);
-
-                    for (Project project : projects) {
-                        Executors.newSingleThreadExecutor().execute(() -> INSTANCE.daoProject().insert(new Project(project.getId(),project.getName(),project.getColor())));
-                    }
+                    List<Project> projects = Arrays.asList(gson.fromJson(reader, Project[].class));
+                    Log.d("STAPE2", "onCreate: ");
+                        Executors.newSingleThreadExecutor().execute(() -> INSTANCE.daoProject().insertAll(projects));
                     reader.close();
                 } catch (IOException e) {
                     e.printStackTrace();

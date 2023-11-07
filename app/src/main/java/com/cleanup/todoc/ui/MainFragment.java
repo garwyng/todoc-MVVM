@@ -15,6 +15,8 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -35,6 +37,7 @@ public class MainFragment extends Fragment implements TasksAdapter.DeleteTaskLis
     private EditText dialogEditText;
     private Spinner dialogSpinner;
     private AlertDialog dialog;
+    private MutableLiveData<List<Project>> projects;
     private ProjectDataRepository projectDataRepository;
     private TaskDataRepository taskDataRepository;
     private MainFragmentViewModel mainFragmentViewModel;
@@ -69,7 +72,12 @@ public class MainFragment extends Fragment implements TasksAdapter.DeleteTaskLis
         View view = binding.getRoot();
         dialogSpinner = binding.getRoot().findViewById(R.id.project_spinner);
         Context context = view.getContext();
-
+        final Observer<Project> projectObserver = new Observer<Project>() {
+            @Override
+            public void onChanged(Project project) {
+               projects= mViewModel.getAllProjects();
+            }
+        };
         return view;
 
     }
@@ -86,7 +94,7 @@ public class MainFragment extends Fragment implements TasksAdapter.DeleteTaskLis
         super.onActivityCreated(savedInstanceState);
 
         mViewModel = new ViewModelProvider(this).get(MainFragmentViewModel.class);
-        LiveData<List<Project>> projectList = mViewModel.getAllProject();
+        projects = mViewModel.getAllProjects();
         //if (projectList == null){
         //mViewModel.init();}
 
@@ -121,9 +129,8 @@ public class MainFragment extends Fragment implements TasksAdapter.DeleteTaskLis
      * Sets the data of the Spinner with projects to associate to a new task
      */
     public void populateDialogSpinner() {
-        LiveData<List<Project>> projects = mViewModel.getAllProject();
         if (projects != null && !projects.getValue().isEmpty()) {
-            ArrayAdapter<Project> adapter = new ArrayAdapter<>(this.getContext(), android.R.layout.simple_spinner_item, mViewModel.getAllProject().getValue());
+            ArrayAdapter<Project> adapter = new ArrayAdapter<>(this.getContext(), android.R.layout.simple_spinner_item, projects.getValue());
             adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             if (dialogSpinner != null) {
                 dialogSpinner.setAdapter(adapter);
