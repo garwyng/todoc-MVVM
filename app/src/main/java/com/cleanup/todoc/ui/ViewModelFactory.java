@@ -16,32 +16,34 @@ import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
 public class ViewModelFactory implements ViewModelProvider.Factory {
+    private static ViewModelFactory factory;
     private final ProjectDataRepository projectDataRepository;
     private final TaskDataRepository taskDataRepository;
     private final Executor executor;
 
-    private static ViewModelFactory factory;
-    public static  ViewModelFactory getInstance(Context context){
-        if (factory == null){
-            synchronized (ViewModelFactory.class){
-                if (factory==null){
+    private ViewModelFactory(Context context) {
+        TodocDatabase database = TodocDatabase.getInstance(context);
+        this.projectDataRepository = new ProjectDataRepository(database.daoProject());
+        this.taskDataRepository = new TaskDataRepository(database.daoTask());
+        this.executor = Executors.newSingleThreadExecutor();
+    }
+
+    public static ViewModelFactory getInstance(Context context) {
+        if (factory == null) {
+            synchronized (ViewModelFactory.class) {
+                if (factory == null) {
                     factory = new ViewModelFactory(context);
                 }
             }
         }
         return factory;
     }
-    private  ViewModelFactory(Context context){
-        TodocDatabase database = TodocDatabase.getInstance(context);
-        this .projectDataRepository = new ProjectDataRepository(database.daoProject());
-        this.taskDataRepository = new TaskDataRepository(database.daoTask());
-        this.executor = Executors.newSingleThreadExecutor();
-    }
+
     @Override
     @NotNull
-    public <T extends ViewModel> T create(Class<T> modelClass){
+    public <T extends ViewModel> T create(Class<T> modelClass) {
         if (modelClass.isAssignableFrom(MainFragmentViewModel.class)) {
-        return (T) new MainFragmentViewModel(projectDataRepository,taskDataRepository,executor);
+            return (T) new MainFragmentViewModel(projectDataRepository, taskDataRepository);
         }
 
         throw new IllegalArgumentException("unknow ViewMdolel class");

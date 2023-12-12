@@ -32,4 +32,21 @@
         android:layout_marginEnd="8dp"
         android:background="@color/spinner_bottom_line" />
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:background="#FFFFFF">
+
+        <Button
+            android:id="@+id/ajouter_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="0dp"
+            android:layout_marginEnd="1dp"
+            android:text="Ajouter"
+            android:textColor="#0C0C0C" />
+    </RelativeLayout>
 </LinearLayout>

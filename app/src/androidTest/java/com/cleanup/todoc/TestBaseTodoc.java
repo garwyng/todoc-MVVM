@@ -1,4 +1,5 @@
 package com.cleanup.todoc;
+
 import android.util.Log;
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule;
@@ -22,48 +23,50 @@ import java.util.List;
 
 @RunWith(AndroidJUnit4.class)
 public class TestBaseTodoc {
-    private long TASK_ID = 0;
-    private Task TASK_DEMO = new Task(TASK_ID,1,"test", Calendar.getInstance().getTime().getTime());
-    private Project projectTest = new Project(4,"test",2502002);
-
-    private TodocDatabase database;
-
+    private final long TASK_ID = 0;
+    private final Task TASK_DEMO = new Task(TASK_ID, 1, "test", Calendar.getInstance().getTime().getTime());
+    private final Project projectTest = new Project(4, "test", 2502002);
     @Rule
 
     public InstantTaskExecutorRule instantTaskExecutorRule = new InstantTaskExecutorRule();
+    private TodocDatabase database;
 
     @Before
-    public void initDb() throws Exception{
+    public void initDb() throws Exception {
         this.database = Room.inMemoryDatabaseBuilder(InstrumentationRegistry.getInstrumentation().getContext(), TodocDatabase.class)
                 .allowMainThreadQueries()
                 .build();
     }
+
     @After
-    public void closeDb() throws Exception{
+    public void closeDb() throws Exception {
         database.close();
     }
-    @Test
-    public void getProjectTest() throws Exception{
-        List<Project> projects =  this.database.daoProject().getAllProjects();
 
-        Assert.assertEquals(3,projects.size());
+    @Test
+    public void getProjectTest() throws Exception {
+        List<Project> projects = this.database.daoProject().getAllProjects();
+
+        Assert.assertEquals(3, projects.size());
 
     }
+
     @Test
-    public void insertProjectTest()throws Exception{
+    public void insertProjectTest() throws Exception {
         this.database.daoProject().insert(projectTest);
-       List<Project> projects = (List<Project>) this.database.daoProject().getAllProjects();
-        Log.d("insertProjectTest", "insertProjectTest: "+projects);
-       Assert.assertTrue(projects.listIterator().next().getName().contains(projectTest.getName()));
-       Assert.assertEquals(1,projects.size());
+        List<Project> projects = this.database.daoProject().getAllProjects();
+        Log.d("insertProjectTest", "insertProjectTest: " + projects);
+        Assert.assertTrue(projects.listIterator().next().getName().contains(projectTest.getName()));
+        Assert.assertEquals(1, projects.size());
     }
+
     @Test
-    public void addTaskTest() throws InterruptedException{
+    public void addTaskTest() throws InterruptedException {
         this.database.daoTask().insertTask(TASK_DEMO);
 
         List<Task> tasks = this.database.daoTask().getAll();
         Assert.assertTrue(tasks.contains(TASK_DEMO));
 
-       // Assert.assertTrue(task.getName().equals(TASK_DEMO.getName()));
+        // Assert.assertTrue(task.getName().equals(TASK_DEMO.getName()));
     }
 }

@@ -1,46 +1,56 @@
 package com.cleanup.todoc.ui;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.ViewModelProvider;
-
-import android.content.Context;
-import android.content.DialogInterface;
-import android.content.res.Resources;
+import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.Spinner;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.cleanup.todoc.R;
-import com.cleanup.todoc.database.RoomDatabaseInitializer;
-import com.cleanup.todoc.database.TaskDao;
-import com.cleanup.todoc.database.TodocDatabase;
-import com.cleanup.todoc.models.Project;
 import com.cleanup.todoc.models.Task;
-import com.google.gson.Gson;
 
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
+    private static final String ORDER = "ORDER";
+    private List<Task> tasks;
+    private TasksAdapter adapter;
+    public static final String PREFS_ORDER="order";
+    public SharedPreferences orderPreference;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        orderPreference= getSharedPreferences(PREFS_ORDER,0);
         getSupportFragmentManager().beginTransaction().add(MainFragment.getInstanceFragment(), "fragment_main").commitNow();
 
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.actions, menu);
+        return true;
+    }
+
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        SharedPreferences.Editor myEditor = orderPreference.edit();
+        if (id == R.id.filter_alphabetical) {
+            myEditor.putString(ORDER,"az");
+        } else if (id == R.id.filter_alphabetical_inverted) {
+            myEditor.putString(ORDER,"za");
+        } else if (id == R.id.filter_oldest_first) {
+            myEditor.putString(ORDER,"OlderToFirst");
+        } else if (id == R.id.filter_recent_first) {
+            myEditor.putString(ORDER,"FistToOlder");
+        }
+        myEditor.apply();
+        adapter.updateTasks(tasks);
+
+        return super.onOptionsItemSelected(item);
+    }
 }

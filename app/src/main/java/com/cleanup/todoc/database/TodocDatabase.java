@@ -22,21 +22,17 @@ import java.io.InputStreamReader;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
-@Database(entities = { Project.class,Task.class}, version = 1, exportSchema = false)
+@Database(entities = {Project.class, Task.class}, version = 1, exportSchema = false)
 public abstract class TodocDatabase extends RoomDatabase {
+    private static final String DATABASE_NAME = "TODOC_database";
     private static volatile TodocDatabase INSTANCE;
-    private static String DATABASE_NAME = "TODOC_database";
     private static Executor executor;
     private static Context contextAPP;
     private static ProjectDataRepository projectDataRepository;
 
-    public abstract ProjectDao daoProject();
-
-    public abstract TaskDao daoTask();
-
     public static synchronized TodocDatabase getInstance(Context context) {
         if (INSTANCE == null) {
-            contextAPP= context.getApplicationContext();
+            contextAPP = context.getApplicationContext();
             INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
                             TodocDatabase.class, DATABASE_NAME)
                     .allowMainThreadQueries()
@@ -52,7 +48,7 @@ public abstract class TodocDatabase extends RoomDatabase {
 
         return new Callback() {
             @Override
-            public void onCreate(@NonNull SupportSQLiteDatabase db){
+            public void onCreate(@NonNull SupportSQLiteDatabase db) {
                 super.onCreate(db);
                 Gson gson = new Gson();
                 InputStream inputStream = contextAPP.getResources().openRawResource(projects);
@@ -62,7 +58,7 @@ public abstract class TodocDatabase extends RoomDatabase {
                     Project[] projects = gson.fromJson(reader, Project[].class);
 
                     for (Project project : projects) {
-                        Executors.newSingleThreadExecutor().execute(() -> INSTANCE.daoProject().insert(new Project(project.getId(),project.getName(),project.getColor())));
+                        Executors.newSingleThreadExecutor().execute(() -> INSTANCE.daoProject().insert(new Project(project.getId(), project.getName(), project.getColor())));
                     }
                     reader.close();
                 } catch (IOException e) {
@@ -73,6 +69,10 @@ public abstract class TodocDatabase extends RoomDatabase {
         };
 
     }
+
+    public abstract ProjectDao daoProject();
+
+    public abstract TaskDao daoTask();
 }
 
 
