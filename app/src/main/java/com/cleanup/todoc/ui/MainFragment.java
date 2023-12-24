@@ -2,13 +2,11 @@ package com.cleanup.todoc.ui;
 
 import static com.cleanup.todoc.ui.MainActivity.PREFS_ORDER;
 
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -27,7 +25,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.cleanup.todoc.R;
 import com.cleanup.todoc.databinding.FragmentMainBinding;
 import com.cleanup.todoc.event.DeleteTaskEvent;
-import com.cleanup.todoc.event.MenuEvent;
+import com.cleanup.todoc.event.SharePrefEvent;
 import com.cleanup.todoc.models.Project;
 import com.cleanup.todoc.models.Task;
 import com.cleanup.todoc.repositories.ProjectDataRepository;
@@ -37,7 +35,6 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -117,7 +114,7 @@ public class MainFragment extends Fragment {
             tasks = new ArrayList<>();
         }
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
-        mRecyclerView.setAdapter(new TasksAdapter(tasks));
+        mRecyclerView.setAdapter(new TasksAdapter(tasks, mViewModel));
     }
     public void showAddTaskDialog() {
         final AlertDialog dialog = getAddTaskDialog();
@@ -217,6 +214,7 @@ public class MainFragment extends Fragment {
                         new Date().getTime()
                 );
                 MainFragmentViewModel.addTask(task);
+                tasks = mViewModel.getTasks();
                 updateTasks();
                 dialogInterface.dismiss();
             }
@@ -235,31 +233,30 @@ public class MainFragment extends Fragment {
      * Updates the list of tasks in the UI
      */
     public void updateTasks() {
-        tasks = mViewModel.getTasks();
         if (tasks.size() == 0) {
             binding.lblNoTask.setVisibility(View.VISIBLE);
             mRecyclerView.setVisibility(View.GONE);
         } else {
             SharedPreferences orderPreferences = getActivity().getSharedPreferences(PREFS_ORDER,0);
             String order = orderPreferences.getString("ORDER","none");
+            Log.d("order", "updateTasks: "+ order);
             binding.lblNoTask.setVisibility(View.GONE);
             mRecyclerView.setVisibility(View.VISIBLE);
             switch (order) {
-                case "AZ":
-                   tasks= MainFragmentViewModel.orderAZ();
+                case "az":
+                   tasks= mViewModel.orderAZ();
                     break;
-                case "ZA":
-                    tasks=MainFragmentViewModel.orderZA();
+                case "za":
+                    tasks=mViewModel.orderZA();
                     break;
                 case "FistToOlder":
-                    tasks=MainFragmentViewModel.orderByNewToLast();
+                    tasks=mViewModel.orderByNewToLast();
                     break;
                 case "OlderToFirst":
-                    tasks=MainFragmentViewModel.orderByLastToNew();
+                    tasks=mViewModel.orderByLastToNew();
                     break;
-                default:mViewModel.getTasks();
             }
-            mRecyclerView.setAdapter(new TasksAdapter(tasks));
+            mRecyclerView.setAdapter(new TasksAdapter(tasks,mViewModel));
         }
     }
     @Override
@@ -279,15 +276,15 @@ public class MainFragment extends Fragment {
         super.onResume();
         updateTasks();
     }
-
     @Subscribe
-    public void onItemMenuSelected(MenuEvent event){
+    public void onSharePref(SharePrefEvent event){
+        Log.d("aaaaa", "onSharePref: ");
         updateTasks();
     }
-
     @Subscribe
     public void onDeleteTask(DeleteTaskEvent event){
         mViewModel.deleteTask(event.task);
+        tasks = mViewModel.getTasks();
         updateTasks();
     }
 

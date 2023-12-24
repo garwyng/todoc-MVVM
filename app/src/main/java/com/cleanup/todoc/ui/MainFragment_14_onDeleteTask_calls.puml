@@ -1,0 +1,275 @@
+@startuml
+
+/' diagram meta data start
+config=CallConfiguration;
+{
+  "rootMethod": "com.cleanup.todoc.ui.MainFragment#onDeleteTask(DeleteTaskEvent)",
+  "projectClassification": {
+    "searchMode": "OpenProject", // OpenProject, AllProjects
+    "includedProjects": "",
+    "pathEndKeywords": "*.impl",
+    "isClientPath": "",
+    "isClientName": "",
+    "isTestPath": "",
+    "isTestName": "",
+    "isMappingPath": "",
+    "isMappingName": "",
+    "isDataAccessPath": "",
+    "isDataAccessName": "",
+    "isDataStructurePath": "",
+    "isDataStructureName": "",
+    "isInterfaceStructuresPath": "",
+    "isInterfaceStructuresName": "",
+    "isEntryPointPath": "",
+    "isEntryPointName": "",
+    "treatFinalFieldsAsMandatory": false
+  },
+  "graphRestriction": {
+    "classPackageExcludeFilter": "",
+    "classPackageIncludeFilter": "",
+    "classNameExcludeFilter": "",
+    "classNameIncludeFilter": "",
+    "methodNameExcludeFilter": "",
+    "methodNameIncludeFilter": "",
+    "removeByInheritance": "", // inheritance/annotation based filtering is done in a second step
+    "removeByAnnotation": "",
+    "removeByClassPackage": "", // cleanup the graph after inheritance/annotation based filtering is done
+    "removeByClassName": "",
+    "cutMappings": false,
+    "cutEnum": true,
+    "cutTests": true,
+    "cutClient": true,
+    "cutDataAccess": true,
+    "cutInterfaceStructures": true,
+    "cutDataStructures": true,
+    "cutGetterAndSetter": true,
+    "cutConstructors": true
+  },
+  "graphTraversal": {
+    "forwardDepth": 3,
+    "backwardDepth": 3,
+    "classPackageExcludeFilter": "",
+    "classPackageIncludeFilter": "",
+    "classNameExcludeFilter": "",
+    "classNameIncludeFilter": "",
+    "methodNameExcludeFilter": "",
+    "methodNameIncludeFilter": "",
+    "hideMappings": false,
+    "hideDataStructures": false,
+    "hidePrivateMethods": true,
+    "hideInterfaceCalls": true, // indirection: implementation -> interface (is hidden) -> implementation
+    "onlyShowApplicationEntryPoints": false, // root node is included
+    "useMethodCallsForStructureDiagram": "ForwardOnly" // ForwardOnly, BothDirections, No
+  },
+  "details": {
+    "aggregation": "GroupByClass", // ByClass, GroupByClass, None
+    "showMethodParametersTypes": false,
+    "showMethodParametersNames": false,
+    "showMethodReturnType": false,
+    "showPackageLevels": 2,
+    "showCallOrder": false,
+    "edgeMode": "MethodsOnly", // TypesOnly, MethodsOnly, TypesAndMethods, MethodsAndDirectTypeUsage
+    "showDetailedClassStructure": false
+  },
+  "rootClass": "com.cleanup.todoc.ui.MainFragment",
+  "extensionCallbackMethod": "" // qualified.class.name#methodName - signature: public static String method(String)
+}
+diagram meta data end '/
+
+
+
+digraph g {
+    rankdir="LR"
+    splines=polyline
+    
+
+'nodes 
+subgraph cluster_856774308 { 
+   	label=cleanup
+	labeljust=l
+	fillcolor="#ececec"
+	style=filled
+   
+   subgraph cluster_1925994771 { 
+   	label=todoc
+	labeljust=l
+	fillcolor="#d8d8d8"
+	style=filled
+   
+   subgraph cluster_1168105629 { 
+   	label=TaskDao_Impl
+	labeljust=l
+	fillcolor=white
+	style=filled
+   
+   TaskDao_Impl1426069251XXXdeleteTask2599333[
+	label="+ deleteTask()"
+	style=filled
+	fillcolor=white
+	tooltip="TaskDao_Impl
+
+null"
+	fontcolor=darkgreen
+];
+} 
+
+subgraph cluster_1606619991 { 
+   	label=TaskDataRepository
+	labeljust=l
+	fillcolor=white
+	style=filled
+   
+   TaskDataRepository1295645968XXXdeleteTask2599333[
+	label="+ deleteTask()"
+	style=filled
+	fillcolor=white
+	tooltip="TaskDataRepository
+
+null"
+	fontcolor=darkgreen
+];
+
+TaskDataRepository1295645968XXXorderAZ0[
+	label="+ orderAZ()"
+	style=filled
+	fillcolor=white
+	tooltip="TaskDataRepository
+
+null"
+	fontcolor=darkgreen
+];
+
+TaskDataRepository1295645968XXXorderByLastToNew0[
+	label="+ orderByLastToNew()"
+	style=filled
+	fillcolor=white
+	tooltip="TaskDataRepository
+
+null"
+	fontcolor=darkgreen
+];
+
+TaskDataRepository1295645968XXXorderByNewToLast0[
+	label="+ orderByNewToLast()"
+	style=filled
+	fillcolor=white
+	tooltip="TaskDataRepository
+
+null"
+	fontcolor=darkgreen
+];
+
+TaskDataRepository1295645968XXXorderZA0[
+	label="+ orderZA()"
+	style=filled
+	fillcolor=white
+	tooltip="TaskDataRepository
+
+null"
+	fontcolor=darkgreen
+];
+} 
+
+subgraph cluster_2009645033 { 
+   	label=MainFragmentViewModel
+	labeljust=l
+	fillcolor=white
+	style=filled
+   
+   MainFragmentViewModel592173596XXXdeleteTask2599333[
+	label="+ deleteTask()"
+	style=filled
+	fillcolor=white
+	tooltip="MainFragmentViewModel
+
+null"
+	fontcolor=darkgreen
+];
+
+MainFragmentViewModel592173596XXXorderAZ0[
+	label="+ orderAZ()"
+	style=filled
+	fillcolor=white
+	tooltip="MainFragmentViewModel
+
+null"
+	fontcolor=darkgreen
+];
+
+MainFragmentViewModel592173596XXXorderByLastToNew0[
+	label="+ orderByLastToNew()"
+	style=filled
+	fillcolor=white
+	tooltip="MainFragmentViewModel
+
+null"
+	fontcolor=darkgreen
+];
+
+MainFragmentViewModel592173596XXXorderByNewToLast0[
+	label="+ orderByNewToLast()"
+	style=filled
+	fillcolor=white
+	tooltip="MainFragmentViewModel
+
+null"
+	fontcolor=darkgreen
+];
+
+MainFragmentViewModel592173596XXXorderZA0[
+	label="+ orderZA()"
+	style=filled
+	fillcolor=white
+	tooltip="MainFragmentViewModel
+
+null"
+	fontcolor=darkgreen
+];
+} 
+
+subgraph cluster_2144438821 { 
+   	label=MainFragment
+	labeljust=l
+	fillcolor=white
+	style=filled
+   
+   MainFragment592173596XXXonDeleteTask57836918[
+	label="+ onDeleteTask()"
+	style=filled
+	fillcolor=white
+	tooltip="MainFragment
+
+null"
+	penwidth=4
+	fontcolor=darkgreen
+];
+
+MainFragment592173596XXXupdateTasks0[
+	label="+ updateTasks()"
+	style=filled
+	fillcolor=white
+	tooltip="MainFragment
+
+&#10;  Updates the list of tasks in the UI&#10; "
+	fontcolor=darkgreen
+];
+} 
+} 
+} 
+
+'edges    
+MainFragment592173596XXXonDeleteTask57836918 -> MainFragment592173596XXXupdateTasks0;
+MainFragment592173596XXXonDeleteTask57836918 -> MainFragmentViewModel592173596XXXdeleteTask2599333;
+MainFragment592173596XXXupdateTasks0 -> MainFragmentViewModel592173596XXXorderAZ0;
+MainFragment592173596XXXupdateTasks0 -> MainFragmentViewModel592173596XXXorderByLastToNew0;
+MainFragment592173596XXXupdateTasks0 -> MainFragmentViewModel592173596XXXorderByNewToLast0;
+MainFragment592173596XXXupdateTasks0 -> MainFragmentViewModel592173596XXXorderZA0;
+MainFragmentViewModel592173596XXXdeleteTask2599333 -> TaskDataRepository1295645968XXXdeleteTask2599333;
+MainFragmentViewModel592173596XXXorderAZ0 -> TaskDataRepository1295645968XXXorderAZ0;
+MainFragmentViewModel592173596XXXorderByLastToNew0 -> TaskDataRepository1295645968XXXorderByLastToNew0;
+MainFragmentViewModel592173596XXXorderByNewToLast0 -> TaskDataRepository1295645968XXXorderByNewToLast0;
+MainFragmentViewModel592173596XXXorderZA0 -> TaskDataRepository1295645968XXXorderZA0;
+TaskDataRepository1295645968XXXdeleteTask2599333 -> TaskDao_Impl1426069251XXXdeleteTask2599333;
+    
+}
+@enduml

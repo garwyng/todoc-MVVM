@@ -41,7 +41,7 @@ public interface TaskDao {
     List<Task> orderAZ();
     @Query("SELECT * FROM task_table ORDER BY name DESC")
     List<Task> orderZA();
-    @Query("SELECT * FROM task_table ORDER BY creationTimestamp ASC")
+    @Query("SELECT * FROM task_table ORDER BY creationTimestamp DESC")
     List<Task> orderByNewToLast();
     @Query("SELECT * FROM task_table ORDER BY creationTimestamp ASC")
     List<Task> orderByLastToNew();

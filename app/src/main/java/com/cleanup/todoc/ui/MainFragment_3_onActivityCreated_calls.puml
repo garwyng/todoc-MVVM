@@ -1,0 +1,155 @@
+@startuml
+
+/' diagram meta data start
+config=CallConfiguration;
+{
+  "rootMethod": "com.cleanup.todoc.ui.MainFragment#onActivityCreated(Bundle)",
+  "projectClassification": {
+    "searchMode": "OpenProject", // OpenProject, AllProjects
+    "includedProjects": "",
+    "pathEndKeywords": "*.impl",
+    "isClientPath": "",
+    "isClientName": "",
+    "isTestPath": "",
+    "isTestName": "",
+    "isMappingPath": "",
+    "isMappingName": "",
+    "isDataAccessPath": "",
+    "isDataAccessName": "",
+    "isDataStructurePath": "",
+    "isDataStructureName": "",
+    "isInterfaceStructuresPath": "",
+    "isInterfaceStructuresName": "",
+    "isEntryPointPath": "",
+    "isEntryPointName": "",
+    "treatFinalFieldsAsMandatory": false
+  },
+  "graphRestriction": {
+    "classPackageExcludeFilter": "",
+    "classPackageIncludeFilter": "",
+    "classNameExcludeFilter": "",
+    "classNameIncludeFilter": "",
+    "methodNameExcludeFilter": "",
+    "methodNameIncludeFilter": "",
+    "removeByInheritance": "", // inheritance/annotation based filtering is done in a second step
+    "removeByAnnotation": "",
+    "removeByClassPackage": "", // cleanup the graph after inheritance/annotation based filtering is done
+    "removeByClassName": "",
+    "cutMappings": false,
+    "cutEnum": true,
+    "cutTests": true,
+    "cutClient": true,
+    "cutDataAccess": true,
+    "cutInterfaceStructures": true,
+    "cutDataStructures": true,
+    "cutGetterAndSetter": true,
+    "cutConstructors": true
+  },
+  "graphTraversal": {
+    "forwardDepth": 3,
+    "backwardDepth": 3,
+    "classPackageExcludeFilter": "",
+    "classPackageIncludeFilter": "",
+    "classNameExcludeFilter": "",
+    "classNameIncludeFilter": "",
+    "methodNameExcludeFilter": "",
+    "methodNameIncludeFilter": "",
+    "hideMappings": false,
+    "hideDataStructures": false,
+    "hidePrivateMethods": true,
+    "hideInterfaceCalls": true, // indirection: implementation -> interface (is hidden) -> implementation
+    "onlyShowApplicationEntryPoints": false, // root node is included
+    "useMethodCallsForStructureDiagram": "ForwardOnly" // ForwardOnly, BothDirections, No
+  },
+  "details": {
+    "aggregation": "GroupByClass", // ByClass, GroupByClass, None
+    "showMethodParametersTypes": false,
+    "showMethodParametersNames": false,
+    "showMethodReturnType": false,
+    "showPackageLevels": 2,
+    "showCallOrder": false,
+    "edgeMode": "MethodsOnly", // TypesOnly, MethodsOnly, TypesAndMethods, MethodsAndDirectTypeUsage
+    "showDetailedClassStructure": false
+  },
+  "rootClass": "com.cleanup.todoc.ui.MainFragment",
+  "extensionCallbackMethod": "" // qualified.class.name#methodName - signature: public static String method(String)
+}
+diagram meta data end '/
+
+
+
+digraph g {
+    rankdir="LR"
+    splines=polyline
+    
+
+'nodes 
+subgraph cluster_856774308 { 
+   	label=cleanup
+	labeljust=l
+	fillcolor="#ececec"
+	style=filled
+   
+   subgraph cluster_1925994771 { 
+   	label=todoc
+	labeljust=l
+	fillcolor="#d8d8d8"
+	style=filled
+   
+   subgraph cluster_2144438821 { 
+   	label=MainFragment
+	labeljust=l
+	fillcolor=white
+	style=filled
+   
+   MainFragment592173596XXXinitRecyclerview0[
+	label="+ initRecyclerview()"
+	style=filled
+	fillcolor=white
+	tooltip="MainFragment
+
+null"
+	fontcolor=darkgreen
+];
+
+MainFragment592173596XXXonActivityCreated2000952482[
+	label="+ onActivityCreated()"
+	style=filled
+	fillcolor=white
+	tooltip="MainFragment
+
+ @deprecated "
+	penwidth=4
+	fontcolor=darkgreen
+];
+
+MainFragment592173596XXXpopulateDialogSpinner0[
+	label="+ populateDialogSpinner()"
+	style=filled
+	fillcolor=white
+	tooltip="MainFragment
+
+&#10;  Sets the data of the Spinner with projects to associate to a new task&#10; "
+	fontcolor=darkgreen
+];
+
+MainFragment592173596XXXshowAddTaskDialog0[
+	label="+ showAddTaskDialog()"
+	style=filled
+	fillcolor=white
+	tooltip="MainFragment
+
+null"
+	fontcolor=darkgreen
+];
+} 
+} 
+} 
+
+'edges    
+MainFragment592173596XXXonActivityCreated2000952482 -> MainFragment592173596XXXinitRecyclerview0;
+MainFragment592173596XXXonActivityCreated2000952482 -> MainFragment592173596XXXshowAddTaskDialog0;
+MainFragment592173596XXXshowAddTaskDialog0 -> MainFragment592173596XXXpopulateDialogSpinner0;
+    
+}
+@enduml

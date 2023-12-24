@@ -44,7 +44,7 @@ public abstract class TodocDatabase extends RoomDatabase {
         return INSTANCE;
     }
 
-    private static RoomDatabase.Callback prepopulateDatabase() {
+    public static RoomDatabase.Callback prepopulateDatabase() {
 
         return new Callback() {
             @Override

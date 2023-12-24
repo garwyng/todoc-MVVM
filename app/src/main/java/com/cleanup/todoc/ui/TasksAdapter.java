@@ -11,11 +11,9 @@ import androidx.appcompat.widget.AppCompatImageView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.cleanup.todoc.R;
-import com.cleanup.todoc.database.ProjectDao;
 import com.cleanup.todoc.event.DeleteTaskEvent;
 import com.cleanup.todoc.models.Project;
 import com.cleanup.todoc.models.Task;
-import com.cleanup.todoc.repositories.ProjectDataRepository;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -28,6 +26,7 @@ import java.util.List;
  */
 public class TasksAdapter extends RecyclerView.Adapter<TasksAdapter.TaskViewHolder> {
 
+    private final MainFragmentViewModel mViewModel;
     /**
      * The list of tasks the adapter deals with
      */
@@ -38,10 +37,12 @@ public class TasksAdapter extends RecyclerView.Adapter<TasksAdapter.TaskViewHold
     /**
      * Instantiates a new TasksAdapter.
      *
-     * @param tasks the list of tasks the adapter deals with to set
+     * @param tasks      the list of tasks the adapter deals with to set
+     * @param mViewModel
      */
-    TasksAdapter(@NonNull final List<Task> tasks) {
+    TasksAdapter(@NonNull final List<Task> tasks, MainFragmentViewModel mViewModel) {
         this.tasks = tasks;
+        this.mViewModel = mViewModel;
     }
 
     /**
@@ -126,8 +127,7 @@ public class TasksAdapter extends RecyclerView.Adapter<TasksAdapter.TaskViewHold
             lblTaskName.setText(task.getName());
             imgDelete.setTag(task);
 
-
-            Project taskProject = ProjectDataRepository.getProjectById(task.getProjectId());
+            Project taskProject = mViewModel.getProjectById(task.getProjectId());
             if (taskProject != null) {
                 imgProject.setSupportImageTintList(ColorStateList.valueOf(taskProject.getColor()));
                 lblProjectName.setText(taskProject.getName());

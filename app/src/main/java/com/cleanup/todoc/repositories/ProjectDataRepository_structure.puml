@@ -1,0 +1,301 @@
+@startuml
+
+/' diagram meta data start
+config=StructureConfiguration;
+{
+  "projectClassification": {
+    "searchMode": "OpenProject", // OpenProject, AllProjects
+    "includedProjects": "",
+    "pathEndKeywords": "*.impl",
+    "isClientPath": "",
+    "isClientName": "",
+    "isTestPath": "",
+    "isTestName": "",
+    "isMappingPath": "",
+    "isMappingName": "",
+    "isDataAccessPath": "",
+    "isDataAccessName": "",
+    "isDataStructurePath": "",
+    "isDataStructureName": "",
+    "isInterfaceStructuresPath": "",
+    "isInterfaceStructuresName": "",
+    "isEntryPointPath": "",
+    "isEntryPointName": "",
+    "treatFinalFieldsAsMandatory": false
+  },
+  "graphRestriction": {
+    "classPackageExcludeFilter": "",
+    "classPackageIncludeFilter": "",
+    "classNameExcludeFilter": "",
+    "classNameIncludeFilter": "",
+    "methodNameExcludeFilter": "",
+    "methodNameIncludeFilter": "",
+    "removeByInheritance": "", // inheritance/annotation based filtering is done in a second step
+    "removeByAnnotation": "",
+    "removeByClassPackage": "", // cleanup the graph after inheritance/annotation based filtering is done
+    "removeByClassName": "",
+    "cutMappings": false,
+    "cutEnum": true,
+    "cutTests": true,
+    "cutClient": true,
+    "cutDataAccess": false,
+    "cutInterfaceStructures": false,
+    "cutDataStructures": false,
+    "cutGetterAndSetter": true,
+    "cutConstructors": true
+  },
+  "graphTraversal": {
+    "forwardDepth": 6,
+    "backwardDepth": 6,
+    "classPackageExcludeFilter": "",
+    "classPackageIncludeFilter": "",
+    "classNameExcludeFilter": "",
+    "classNameIncludeFilter": "",
+    "methodNameExcludeFilter": "",
+    "methodNameIncludeFilter": "",
+    "hideMappings": false,
+    "hideDataStructures": false,
+    "hidePrivateMethods": true,
+    "hideInterfaceCalls": true, // indirection: implementation -> interface (is hidden) -> implementation
+    "onlyShowApplicationEntryPoints": false, // root node is included
+    "useMethodCallsForStructureDiagram": "ForwardOnly" // ForwardOnly, BothDirections, No
+  },
+  "details": {
+    "aggregation": "GroupByClass", // ByClass, GroupByClass, None
+    "showClassGenericTypes": true,
+    "showMethods": true,
+    "showMethodParameterNames": true,
+    "showMethodParameterTypes": true,
+    "showMethodReturnType": true,
+    "showPackageLevels": 2,
+    "showDetailedClassStructure": true
+  },
+  "rootClass": "com.cleanup.todoc.repositories.ProjectDataRepository",
+  "extensionCallbackMethod": "" // qualified.class.name#methodName - signature: public static String method(String)
+}
+diagram meta data end '/
+
+
+
+digraph g {
+    rankdir="TB"
+    splines=polyline
+    
+
+'nodes 
+subgraph cluster_856774308 { 
+   	label=cleanup
+	labeljust=l
+	fillcolor="#ececec"
+	style=filled
+   
+   subgraph cluster_1925994771 { 
+   	label=todoc
+	labeljust=l
+	fillcolor="#d8d8d8"
+	style=filled
+   
+   MainActivity592173596[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)MainActivity</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   adapter: TasksAdapter [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   fragment: MainFragment [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   orderPreference: SharedPreferences [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   tasks: List&lt;Task&gt; [0..*]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" ># onCreate(savedInstanceState: Bundle)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ onCreateOptionsMenu(menu: Menu): boolean</TD></TR>
+<TR><TD ALIGN="LEFT" >+ onOptionsItemSelected(item: MenuItem): boolean</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+MainActivityInstrumentedTest1258479462[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)MainActivityInstrumentedTest</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+   mActivityScenarioRule: ActivityScenarioRule&lt;MainActivity&gt; [0..1]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ addAndRemoveTask()</TD></TR>
+<TR><TD ALIGN="LEFT" >+ sortTasks()</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+MainFragment592173596[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)MainFragment</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   adapter: TasksAdapter [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   binding: FragmentMainBinding [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   dialog: AlertDialog [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   dialogEditText: EditText [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   dialogSpinner: Spinner [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   mRecyclerView: RecyclerView [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   mViewModel: MainFragmentViewModel [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   mainFragmentViewModel: MainFragmentViewModel [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   projectDataRepository: ProjectDataRepository [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   taskDataRepository: TaskDataRepository [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   tasks: List&lt;Task&gt; [0..*]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >- configureViewModel()</TD></TR>
+<TR><TD ALIGN="LEFT" >+ initRecyclerview()</TD></TR>
+<TR><TD ALIGN="LEFT" >+ onActivityCreated(savedInstanceState: Bundle)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ onCreateView(inflater: LayoutInflater, container: ViewGroup, savedInstanceState: Bundle): View</TD></TR>
+<TR><TD ALIGN="LEFT" >+ onDeleteTask(event: DeleteTaskEvent)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ onPositiveButtonClick(dialogInterface: DialogInterface)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ onResume()</TD></TR>
+<TR><TD ALIGN="LEFT" >+ onSharePref(event: SharePrefEvent)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ onStart()</TD></TR>
+<TR><TD ALIGN="LEFT" >+ onStop()</TD></TR>
+<TR><TD ALIGN="LEFT" >+ populateDialogSpinner()</TD></TR>
+<TR><TD ALIGN="LEFT" >+ showAddTaskDialog()</TD></TR>
+<TR><TD ALIGN="LEFT" >+ updateTasks()</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+MainFragmentViewModel592173596[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)MainFragmentViewModel</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   allProjects: List&lt;Project&gt; [0..*]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   projectDataRepository: ProjectDataRepository [0..1]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ addTask(task: Task)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ deleteTask(task: Task)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ getProjectById(id: long): Project</TD></TR>
+<TR><TD ALIGN="LEFT" >+ orderAZ(): List&lt;Task&gt;</TD></TR>
+<TR><TD ALIGN="LEFT" >+ orderByLastToNew(): List&lt;Task&gt;</TD></TR>
+<TR><TD ALIGN="LEFT" >+ orderByNewToLast(): List&lt;Task&gt;</TD></TR>
+<TR><TD ALIGN="LEFT" >+ orderZA(): List&lt;Task&gt;</TD></TR>
+<TR><TD ALIGN="LEFT" >+ updateTask(task: Task)</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+Project2050372082[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)Project</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   color: int [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   id: long [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   name: String [0..1]</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+ProjectDao_Impl1426069251[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)ProjectDao_Impl</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   __db: RoomDatabase [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   __insertionAdapterOfProject: EntityInsertionAdapter&lt;Project&gt; [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   __insertionAdapterOfProject_1: EntityInsertionAdapter&lt;Project&gt; [0..1]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ getProjectById(projectId: long): Project</TD></TR>
+<TR><TD ALIGN="LEFT" >+ insert(project: Project)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ insertAll(projects: List&lt;Project&gt;)</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+ProjectDataRepository1295645968[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)ProjectDataRepository</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   projectDao: ProjectDao [0..1]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ getProjectById(projectId: long): Project</TD></TR>
+<TR><TD ALIGN="LEFT" >+ insert(project: Project)</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+TasksAdapter592173596[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)TasksAdapter</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   mViewModel: MainFragmentViewModel [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   tasks: List&lt;Task&gt; [0..*]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ onBindViewHolder(taskViewHolder: TaskViewHolder, position: int)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ onCreateViewHolder(viewGroup: ViewGroup, viewType: int): TaskViewHolder</TD></TR>
+<TR><TD ALIGN="LEFT" >+ updateTasks(tasks: List&lt;Task&gt;)</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+ViewModelFactory592173596[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)ViewModelFactory</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   executor: Executor [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   projectDataRepository: ProjectDataRepository [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   taskDataRepository: TaskDataRepository [0..1]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ create(modelClass: Class&lt;T&gt;): T</TD></TR>
+<TR><TD ALIGN="LEFT" >+ getInstance(context: Context): ViewModelFactory</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+} 
+} 
+
+'edges    
+MainActivity592173596 -> MainFragment592173596[label="fragment
+[0..1]"];
+MainActivity592173596 -> TasksAdapter592173596[label="adapter
+[0..1]"];
+MainActivityInstrumentedTest1258479462 -> MainActivity592173596[label="mActivityScenarioRule
+[0..1]"];
+MainFragment592173596 -> MainFragmentViewModel592173596[label="mViewModel
+[0..1]"];
+MainFragment592173596 -> MainFragmentViewModel592173596[label="mainFragmentViewModel
+[0..1]"];
+MainFragment592173596 -> ProjectDataRepository1295645968[label="projectDataRepository
+[0..1]"];
+MainFragment592173596 -> TasksAdapter592173596[label="adapter
+[0..1]"];
+MainFragmentViewModel592173596 -> ProjectDataRepository1295645968[label="projectDataRepository
+[0..1]"];
+ProjectDao_Impl1426069251 -> Project2050372082[label="__insertionAdapterOfProject
+[0..1]"];
+ProjectDao_Impl1426069251 -> Project2050372082[label="__insertionAdapterOfProject_1
+[0..1]"];
+ProjectDataRepository1295645968 -> ProjectDao_Impl1426069251[arrowhead=none];
+TasksAdapter592173596 -> MainFragmentViewModel592173596[label="mViewModel
+[0..1]"];
+ViewModelFactory592173596 -> ProjectDataRepository1295645968[label="projectDataRepository
+[0..1]"];
+    
+}
+@enduml

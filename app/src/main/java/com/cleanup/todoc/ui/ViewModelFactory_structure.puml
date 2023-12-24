@@ -1,0 +1,243 @@
+@startuml
+
+/' diagram meta data start
+config=StructureConfiguration;
+{
+  "projectClassification": {
+    "searchMode": "OpenProject", // OpenProject, AllProjects
+    "includedProjects": "",
+    "pathEndKeywords": "*.impl",
+    "isClientPath": "",
+    "isClientName": "",
+    "isTestPath": "",
+    "isTestName": "",
+    "isMappingPath": "",
+    "isMappingName": "",
+    "isDataAccessPath": "",
+    "isDataAccessName": "",
+    "isDataStructurePath": "",
+    "isDataStructureName": "",
+    "isInterfaceStructuresPath": "",
+    "isInterfaceStructuresName": "",
+    "isEntryPointPath": "",
+    "isEntryPointName": "",
+    "treatFinalFieldsAsMandatory": false
+  },
+  "graphRestriction": {
+    "classPackageExcludeFilter": "",
+    "classPackageIncludeFilter": "",
+    "classNameExcludeFilter": "",
+    "classNameIncludeFilter": "",
+    "methodNameExcludeFilter": "",
+    "methodNameIncludeFilter": "",
+    "removeByInheritance": "", // inheritance/annotation based filtering is done in a second step
+    "removeByAnnotation": "",
+    "removeByClassPackage": "", // cleanup the graph after inheritance/annotation based filtering is done
+    "removeByClassName": "",
+    "cutMappings": false,
+    "cutEnum": true,
+    "cutTests": true,
+    "cutClient": true,
+    "cutDataAccess": false,
+    "cutInterfaceStructures": false,
+    "cutDataStructures": false,
+    "cutGetterAndSetter": true,
+    "cutConstructors": true
+  },
+  "graphTraversal": {
+    "forwardDepth": 6,
+    "backwardDepth": 6,
+    "classPackageExcludeFilter": "",
+    "classPackageIncludeFilter": "",
+    "classNameExcludeFilter": "",
+    "classNameIncludeFilter": "",
+    "methodNameExcludeFilter": "",
+    "methodNameIncludeFilter": "",
+    "hideMappings": false,
+    "hideDataStructures": false,
+    "hidePrivateMethods": true,
+    "hideInterfaceCalls": true, // indirection: implementation -> interface (is hidden) -> implementation
+    "onlyShowApplicationEntryPoints": false, // root node is included
+    "useMethodCallsForStructureDiagram": "ForwardOnly" // ForwardOnly, BothDirections, No
+  },
+  "details": {
+    "aggregation": "GroupByClass", // ByClass, GroupByClass, None
+    "showClassGenericTypes": true,
+    "showMethods": true,
+    "showMethodParameterNames": true,
+    "showMethodParameterTypes": true,
+    "showMethodReturnType": true,
+    "showPackageLevels": 2,
+    "showDetailedClassStructure": true
+  },
+  "rootClass": "com.cleanup.todoc.ui.ViewModelFactory",
+  "extensionCallbackMethod": "" // qualified.class.name#methodName - signature: public static String method(String)
+}
+diagram meta data end '/
+
+
+
+digraph g {
+    rankdir="TB"
+    splines=polyline
+    
+
+'nodes 
+subgraph cluster_856774308 { 
+   	label=cleanup
+	labeljust=l
+	fillcolor="#ececec"
+	style=filled
+   
+   subgraph cluster_1925994771 { 
+   	label=todoc
+	labeljust=l
+	fillcolor="#d8d8d8"
+	style=filled
+   
+   Project2050372082[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)Project</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   color: int [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   id: long [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   name: String [0..1]</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+ProjectDao_Impl1426069251[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)ProjectDao_Impl</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   __db: RoomDatabase [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   __insertionAdapterOfProject: EntityInsertionAdapter&lt;Project&gt; [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   __insertionAdapterOfProject_1: EntityInsertionAdapter&lt;Project&gt; [0..1]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ getProjectById(projectId: long): Project</TD></TR>
+<TR><TD ALIGN="LEFT" >+ insert(project: Project)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ insertAll(projects: List&lt;Project&gt;)</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+ProjectDataRepository1295645968[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)ProjectDataRepository</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   projectDao: ProjectDao [0..1]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ getProjectById(projectId: long): Project</TD></TR>
+<TR><TD ALIGN="LEFT" >+ insert(project: Project)</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+Task2050372082[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)Task</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   creationTimestamp: long [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   id: long [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   name: String [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   projectId: long [1]</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+TaskDao_Impl1426069251[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)TaskDao_Impl</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   __db: RoomDatabase [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   __deletionAdapterOfTask: EntityDeletionOrUpdateAdapter&lt;Task&gt; [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   __insertionAdapterOfTask: EntityInsertionAdapter&lt;Task&gt; [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   __updateAdapterOfTask: EntityDeletionOrUpdateAdapter&lt;Task&gt; [0..1]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ deleteTask(task: Task)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ getTaskById(taskId: Long): Task</TD></TR>
+<TR><TD ALIGN="LEFT" >+ insertTask(task: Task)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ orderAZ(): List&lt;Task&gt;</TD></TR>
+<TR><TD ALIGN="LEFT" >+ orderByLastToNew(): List&lt;Task&gt;</TD></TR>
+<TR><TD ALIGN="LEFT" >+ orderByNewToLast(): List&lt;Task&gt;</TD></TR>
+<TR><TD ALIGN="LEFT" >+ orderZA(): List&lt;Task&gt;</TD></TR>
+<TR><TD ALIGN="LEFT" >+ updateTask(task: Task)</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+TaskDataRepository1295645968[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)TaskDataRepository</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   taskDao: TaskDao [0..1]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ addTask(task: Task)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ deleteTask(task: Task)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ getTask(TaskId: Long): Task</TD></TR>
+<TR><TD ALIGN="LEFT" >+ orderAZ(): List&lt;Task&gt;</TD></TR>
+<TR><TD ALIGN="LEFT" >+ orderByLastToNew(): List&lt;Task&gt;</TD></TR>
+<TR><TD ALIGN="LEFT" >+ orderByNewToLast(): List&lt;Task&gt;</TD></TR>
+<TR><TD ALIGN="LEFT" >+ orderZA(): List&lt;Task&gt;</TD></TR>
+<TR><TD ALIGN="LEFT" >+ updateTask(task: Task)</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+ViewModelFactory592173596[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)ViewModelFactory</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   executor: Executor [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   projectDataRepository: ProjectDataRepository [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   taskDataRepository: TaskDataRepository [0..1]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ create(modelClass: Class&lt;T&gt;): T</TD></TR>
+<TR><TD ALIGN="LEFT" >+ getInstance(context: Context): ViewModelFactory</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+} 
+} 
+
+'edges    
+ProjectDao_Impl1426069251 -> Project2050372082[label="__insertionAdapterOfProject
+[0..1]"];
+ProjectDao_Impl1426069251 -> Project2050372082[label="__insertionAdapterOfProject_1
+[0..1]"];
+ProjectDataRepository1295645968 -> ProjectDao_Impl1426069251[arrowhead=none];
+TaskDao_Impl1426069251 -> Task2050372082[label="__deletionAdapterOfTask
+[0..1]"];
+TaskDao_Impl1426069251 -> Task2050372082[label="__insertionAdapterOfTask
+[0..1]"];
+TaskDao_Impl1426069251 -> Task2050372082[label="__updateAdapterOfTask
+[0..1]"];
+TaskDataRepository1295645968 -> TaskDao_Impl1426069251[arrowhead=none];
+ViewModelFactory592173596 -> ProjectDataRepository1295645968[label="projectDataRepository
+[0..1]"];
+ViewModelFactory592173596 -> TaskDataRepository1295645968[label="taskDataRepository
+[0..1]"];
+    
+}
+@enduml

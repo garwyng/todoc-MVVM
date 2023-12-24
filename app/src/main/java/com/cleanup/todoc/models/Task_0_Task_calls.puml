@@ -1,0 +1,352 @@
+@startuml
+
+/' diagram meta data start
+config=CallConfiguration;
+{
+  "rootMethod": "com.cleanup.todoc.models.Task#Task(long,long,String,long)",
+  "projectClassification": {
+    "searchMode": "OpenProject", // OpenProject, AllProjects
+    "includedProjects": "",
+    "pathEndKeywords": "*.impl",
+    "isClientPath": "",
+    "isClientName": "",
+    "isTestPath": "",
+    "isTestName": "",
+    "isMappingPath": "",
+    "isMappingName": "",
+    "isDataAccessPath": "",
+    "isDataAccessName": "",
+    "isDataStructurePath": "",
+    "isDataStructureName": "",
+    "isInterfaceStructuresPath": "",
+    "isInterfaceStructuresName": "",
+    "isEntryPointPath": "",
+    "isEntryPointName": "",
+    "treatFinalFieldsAsMandatory": false
+  },
+  "graphRestriction": {
+    "classPackageExcludeFilter": "",
+    "classPackageIncludeFilter": "",
+    "classNameExcludeFilter": "",
+    "classNameIncludeFilter": "",
+    "methodNameExcludeFilter": "",
+    "methodNameIncludeFilter": "",
+    "removeByInheritance": "", // inheritance/annotation based filtering is done in a second step
+    "removeByAnnotation": "",
+    "removeByClassPackage": "", // cleanup the graph after inheritance/annotation based filtering is done
+    "removeByClassName": "",
+    "cutMappings": false,
+    "cutEnum": true,
+    "cutTests": true,
+    "cutClient": true,
+    "cutDataAccess": true,
+    "cutInterfaceStructures": true,
+    "cutDataStructures": true,
+    "cutGetterAndSetter": true,
+    "cutConstructors": true
+  },
+  "graphTraversal": {
+    "forwardDepth": 3,
+    "backwardDepth": 3,
+    "classPackageExcludeFilter": "",
+    "classPackageIncludeFilter": "",
+    "classNameExcludeFilter": "",
+    "classNameIncludeFilter": "",
+    "methodNameExcludeFilter": "",
+    "methodNameIncludeFilter": "",
+    "hideMappings": false,
+    "hideDataStructures": false,
+    "hidePrivateMethods": true,
+    "hideInterfaceCalls": true, // indirection: implementation -> interface (is hidden) -> implementation
+    "onlyShowApplicationEntryPoints": false, // root node is included
+    "useMethodCallsForStructureDiagram": "ForwardOnly" // ForwardOnly, BothDirections, No
+  },
+  "details": {
+    "aggregation": "GroupByClass", // ByClass, GroupByClass, None
+    "showMethodParametersTypes": false,
+    "showMethodParametersNames": false,
+    "showMethodReturnType": false,
+    "showPackageLevels": 2,
+    "showCallOrder": false,
+    "edgeMode": "MethodsOnly", // TypesOnly, MethodsOnly, TypesAndMethods, MethodsAndDirectTypeUsage
+    "showDetailedClassStructure": false
+  },
+  "rootClass": "com.cleanup.todoc.models.Task",
+  "extensionCallbackMethod": "" // qualified.class.name#methodName - signature: public static String method(String)
+}
+diagram meta data end '/
+
+
+
+digraph g {
+    rankdir="LR"
+    splines=polyline
+    
+
+'nodes 
+subgraph cluster_856774308 { 
+   	label=cleanup
+	labeljust=l
+	fillcolor="#ececec"
+	style=filled
+   
+   subgraph cluster_1925994771 { 
+   	label=todoc
+	labeljust=l
+	fillcolor="#d8d8d8"
+	style=filled
+   
+   subgraph cluster_1168105629 { 
+   	label=TaskDao_Impl
+	labeljust=l
+	fillcolor=white
+	style=filled
+   
+   TaskDao_Impl1426069251XXXgetTaskById2374300[
+	label="+ getTaskById()"
+	style=filled
+	fillcolor=white
+	tooltip="TaskDao_Impl
+
+null"
+	fontcolor=darkgreen
+];
+
+TaskDao_Impl1426069251XXXorderAZ0[
+	label="+ orderAZ()"
+	style=filled
+	fillcolor=white
+	tooltip="TaskDao_Impl
+
+null"
+	fontcolor=darkgreen
+];
+
+TaskDao_Impl1426069251XXXorderByLastToNew0[
+	label="+ orderByLastToNew()"
+	style=filled
+	fillcolor=white
+	tooltip="TaskDao_Impl
+
+null"
+	fontcolor=darkgreen
+];
+
+TaskDao_Impl1426069251XXXorderByNewToLast0[
+	label="+ orderByNewToLast()"
+	style=filled
+	fillcolor=white
+	tooltip="TaskDao_Impl
+
+null"
+	fontcolor=darkgreen
+];
+
+TaskDao_Impl1426069251XXXorderZA0[
+	label="+ orderZA()"
+	style=filled
+	fillcolor=white
+	tooltip="TaskDao_Impl
+
+null"
+	fontcolor=darkgreen
+];
+} 
+
+subgraph cluster_1264248799 { 
+   	label=Task
+	labeljust=l
+	fillcolor=white
+	style=filled
+   
+   Task2050372082XXXTask1163692865[
+	label="+ Task()"
+	style=filled
+	fillcolor=white
+	tooltip="Task
+
+&#10;  Instantiates a new Task.&#10; &#10;  @param idthe unique identifier of the task to set&#10;  @param projectId the unique identifier of the project associated to the task to set&#10;  @param name the name of the task to set&#10;  @param creationTimestamp the timestamp when the task has been created to set&#10; "
+	penwidth=4
+	fontcolor=darkgreen
+];
+} 
+
+subgraph cluster_1325368178 { 
+   	label=TestBaseTodoc
+	labeljust=l
+	fillcolor=white
+	style=filled
+   
+   TestBaseTodoc1258479462XXXtest_az_comparator0[
+	label="+ test_az_comparator()"
+	style=filled
+	fillcolor=white
+	tooltip="TestBaseTodoc
+
+null"
+	fontcolor=darkgreen
+];
+
+TestBaseTodoc1258479462XXXtest_old_comparator0[
+	label="+ test_old_comparator()"
+	style=filled
+	fillcolor=white
+	tooltip="TestBaseTodoc
+
+null"
+	fontcolor=darkgreen
+];
+
+TestBaseTodoc1258479462XXXtest_recent_comparator0[
+	label="+ test_recent_comparator()"
+	style=filled
+	fillcolor=white
+	tooltip="TestBaseTodoc
+
+null"
+	fontcolor=darkgreen
+];
+
+TestBaseTodoc1258479462XXXtest_za_comparator0[
+	label="+ test_za_comparator()"
+	style=filled
+	fillcolor=white
+	tooltip="TestBaseTodoc
+
+null"
+	fontcolor=darkgreen
+];
+} 
+
+subgraph cluster_1606619991 { 
+   	label=TaskDataRepository
+	labeljust=l
+	fillcolor=white
+	style=filled
+   
+   TaskDataRepository1295645968XXXgetTask2374300[
+	label="+ getTask()"
+	style=filled
+	fillcolor=white
+	tooltip="TaskDataRepository
+
+null"
+	fontcolor=darkgreen
+];
+
+TaskDataRepository1295645968XXXorderAZ0[
+	label="+ orderAZ()"
+	style=filled
+	fillcolor=white
+	tooltip="TaskDataRepository
+
+null"
+	fontcolor=darkgreen
+];
+
+TaskDataRepository1295645968XXXorderByLastToNew0[
+	label="+ orderByLastToNew()"
+	style=filled
+	fillcolor=white
+	tooltip="TaskDataRepository
+
+null"
+	fontcolor=darkgreen
+];
+
+TaskDataRepository1295645968XXXorderByNewToLast0[
+	label="+ orderByNewToLast()"
+	style=filled
+	fillcolor=white
+	tooltip="TaskDataRepository
+
+null"
+	fontcolor=darkgreen
+];
+
+TaskDataRepository1295645968XXXorderZA0[
+	label="+ orderZA()"
+	style=filled
+	fillcolor=white
+	tooltip="TaskDataRepository
+
+null"
+	fontcolor=darkgreen
+];
+} 
+
+subgraph cluster_2009645033 { 
+   	label=MainFragmentViewModel
+	labeljust=l
+	fillcolor=white
+	style=filled
+   
+   MainFragmentViewModel592173596XXXorderAZ0[
+	label="+ orderAZ()"
+	style=filled
+	fillcolor=white
+	tooltip="MainFragmentViewModel
+
+null"
+	fontcolor=darkgreen
+];
+
+MainFragmentViewModel592173596XXXorderByLastToNew0[
+	label="+ orderByLastToNew()"
+	style=filled
+	fillcolor=white
+	tooltip="MainFragmentViewModel
+
+null"
+	fontcolor=darkgreen
+];
+
+MainFragmentViewModel592173596XXXorderByNewToLast0[
+	label="+ orderByNewToLast()"
+	style=filled
+	fillcolor=white
+	tooltip="MainFragmentViewModel
+
+null"
+	fontcolor=darkgreen
+];
+
+MainFragmentViewModel592173596XXXorderZA0[
+	label="+ orderZA()"
+	style=filled
+	fillcolor=white
+	tooltip="MainFragmentViewModel
+
+null"
+	fontcolor=darkgreen
+];
+} 
+} 
+} 
+
+'edges    
+MainFragmentViewModel592173596XXXorderAZ0 -> TaskDataRepository1295645968XXXorderAZ0;
+MainFragmentViewModel592173596XXXorderByLastToNew0 -> TaskDataRepository1295645968XXXorderByLastToNew0;
+MainFragmentViewModel592173596XXXorderByNewToLast0 -> TaskDataRepository1295645968XXXorderByNewToLast0;
+MainFragmentViewModel592173596XXXorderZA0 -> TaskDataRepository1295645968XXXorderZA0;
+TaskDao_Impl1426069251XXXgetTaskById2374300 -> Task2050372082XXXTask1163692865;
+TaskDao_Impl1426069251XXXorderAZ0 -> Task2050372082XXXTask1163692865;
+TaskDao_Impl1426069251XXXorderByLastToNew0 -> Task2050372082XXXTask1163692865;
+TaskDao_Impl1426069251XXXorderByNewToLast0 -> Task2050372082XXXTask1163692865;
+TaskDao_Impl1426069251XXXorderZA0 -> Task2050372082XXXTask1163692865;
+TaskDataRepository1295645968XXXgetTask2374300 -> TaskDao_Impl1426069251XXXgetTaskById2374300;
+TaskDataRepository1295645968XXXorderAZ0 -> TaskDao_Impl1426069251XXXorderAZ0;
+TaskDataRepository1295645968XXXorderByLastToNew0 -> TaskDao_Impl1426069251XXXorderByLastToNew0;
+TaskDataRepository1295645968XXXorderByNewToLast0 -> TaskDao_Impl1426069251XXXorderByNewToLast0;
+TaskDataRepository1295645968XXXorderZA0 -> TaskDao_Impl1426069251XXXorderZA0;
+TestBaseTodoc1258479462XXXtest_az_comparator0 -> Task2050372082XXXTask1163692865;
+TestBaseTodoc1258479462XXXtest_az_comparator0 -> TaskDao_Impl1426069251XXXorderAZ0;
+TestBaseTodoc1258479462XXXtest_old_comparator0 -> Task2050372082XXXTask1163692865;
+TestBaseTodoc1258479462XXXtest_old_comparator0 -> TaskDao_Impl1426069251XXXorderByLastToNew0;
+TestBaseTodoc1258479462XXXtest_recent_comparator0 -> Task2050372082XXXTask1163692865;
+TestBaseTodoc1258479462XXXtest_recent_comparator0 -> TaskDao_Impl1426069251XXXorderByNewToLast0;
+TestBaseTodoc1258479462XXXtest_za_comparator0 -> Task2050372082XXXTask1163692865;
+TestBaseTodoc1258479462XXXtest_za_comparator0 -> TaskDao_Impl1426069251XXXorderZA0;
+    
+}
+@enduml

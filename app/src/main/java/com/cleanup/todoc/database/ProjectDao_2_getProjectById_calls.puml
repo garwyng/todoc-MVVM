@@ -1,0 +1,194 @@
+@startuml
+
+/' diagram meta data start
+config=CallConfiguration;
+{
+  "rootMethod": "com.cleanup.todoc.database.ProjectDao#getProjectById(long)",
+  "projectClassification": {
+    "searchMode": "OpenProject", // OpenProject, AllProjects
+    "includedProjects": "",
+    "pathEndKeywords": "*.impl",
+    "isClientPath": "",
+    "isClientName": "",
+    "isTestPath": "",
+    "isTestName": "",
+    "isMappingPath": "",
+    "isMappingName": "",
+    "isDataAccessPath": "",
+    "isDataAccessName": "",
+    "isDataStructurePath": "",
+    "isDataStructureName": "",
+    "isInterfaceStructuresPath": "",
+    "isInterfaceStructuresName": "",
+    "isEntryPointPath": "",
+    "isEntryPointName": "",
+    "treatFinalFieldsAsMandatory": false
+  },
+  "graphRestriction": {
+    "classPackageExcludeFilter": "",
+    "classPackageIncludeFilter": "",
+    "classNameExcludeFilter": "",
+    "classNameIncludeFilter": "",
+    "methodNameExcludeFilter": "",
+    "methodNameIncludeFilter": "",
+    "removeByInheritance": "", // inheritance/annotation based filtering is done in a second step
+    "removeByAnnotation": "",
+    "removeByClassPackage": "", // cleanup the graph after inheritance/annotation based filtering is done
+    "removeByClassName": "",
+    "cutMappings": false,
+    "cutEnum": true,
+    "cutTests": true,
+    "cutClient": true,
+    "cutDataAccess": true,
+    "cutInterfaceStructures": true,
+    "cutDataStructures": true,
+    "cutGetterAndSetter": true,
+    "cutConstructors": true
+  },
+  "graphTraversal": {
+    "forwardDepth": 3,
+    "backwardDepth": 3,
+    "classPackageExcludeFilter": "",
+    "classPackageIncludeFilter": "",
+    "classNameExcludeFilter": "",
+    "classNameIncludeFilter": "",
+    "methodNameExcludeFilter": "",
+    "methodNameIncludeFilter": "",
+    "hideMappings": false,
+    "hideDataStructures": false,
+    "hidePrivateMethods": true,
+    "hideInterfaceCalls": true, // indirection: implementation -> interface (is hidden) -> implementation
+    "onlyShowApplicationEntryPoints": false, // root node is included
+    "useMethodCallsForStructureDiagram": "ForwardOnly" // ForwardOnly, BothDirections, No
+  },
+  "details": {
+    "aggregation": "GroupByClass", // ByClass, GroupByClass, None
+    "showMethodParametersTypes": false,
+    "showMethodParametersNames": false,
+    "showMethodReturnType": false,
+    "showPackageLevels": 2,
+    "showCallOrder": false,
+    "edgeMode": "MethodsOnly", // TypesOnly, MethodsOnly, TypesAndMethods, MethodsAndDirectTypeUsage
+    "showDetailedClassStructure": false
+  },
+  "rootClass": "com.cleanup.todoc.database.ProjectDao",
+  "extensionCallbackMethod": "" // qualified.class.name#methodName - signature: public static String method(String)
+}
+diagram meta data end '/
+
+
+
+digraph g {
+    rankdir="LR"
+    splines=polyline
+    
+
+'nodes 
+subgraph cluster_856774308 { 
+   	label=cleanup
+	labeljust=l
+	fillcolor="#ececec"
+	style=filled
+   
+   subgraph cluster_1925994771 { 
+   	label=todoc
+	labeljust=l
+	fillcolor="#d8d8d8"
+	style=filled
+   
+   subgraph cluster_1419102573 { 
+   	label=TasksAdapter
+	labeljust=l
+	fillcolor=white
+	style=filled
+   
+   TasksAdapter592173596XXXonBindViewHolder1925136507[
+	label="+ onBindViewHolder()"
+	style=filled
+	fillcolor=white
+	tooltip="TasksAdapter
+
+null"
+	fontcolor=darkgreen
+];
+} 
+
+subgraph cluster_1517203876 { 
+   	label=ProjectDao
+	labeljust=l
+	fillcolor=white
+	style=filled
+   
+   ProjectDao1426069251XXXgetProjectById3327612[
+	label="+ getProjectById()"
+	style=filled
+	fillcolor=white
+	tooltip="ProjectDao
+
+null"
+	penwidth=4
+	fontcolor=darkgreen
+];
+} 
+
+subgraph cluster_1976424815 { 
+   	label=ProjectDataRepository
+	labeljust=l
+	fillcolor=white
+	style=filled
+   
+   ProjectDataRepository1295645968XXXgetProjectById3327612[
+	label="+ getProjectById()"
+	style=filled
+	fillcolor=white
+	tooltip="ProjectDataRepository
+
+null"
+	fontcolor=darkgreen
+];
+} 
+
+subgraph cluster_2009645033 { 
+   	label=MainFragmentViewModel
+	labeljust=l
+	fillcolor=white
+	style=filled
+   
+   MainFragmentViewModel592173596XXXgetProjectById3327612[
+	label="+ getProjectById()"
+	style=filled
+	fillcolor=white
+	tooltip="MainFragmentViewModel
+
+null"
+	fontcolor=darkgreen
+];
+} 
+
+subgraph cluster_558908411 { 
+   	label=ProjectDao_Impl
+	labeljust=l
+	fillcolor=white
+	style=filled
+   
+   ProjectDao_Impl1426069251XXXgetProjectById3327612[
+	label="+ getProjectById()"
+	style=filled
+	fillcolor=white
+	tooltip="ProjectDao_Impl
+
+null"
+	fontcolor=darkgreen
+];
+} 
+} 
+} 
+
+'edges    
+MainFragmentViewModel592173596XXXgetProjectById3327612 -> ProjectDataRepository1295645968XXXgetProjectById3327612;
+ProjectDao1426069251XXXgetProjectById3327612 -> ProjectDao_Impl1426069251XXXgetProjectById3327612;
+ProjectDataRepository1295645968XXXgetProjectById3327612 -> ProjectDao1426069251XXXgetProjectById3327612;
+TasksAdapter592173596XXXonBindViewHolder1925136507 -> MainFragmentViewModel592173596XXXgetProjectById3327612;
+    
+}
+@enduml

@@ -58,11 +58,11 @@ public class MainFragmentViewModel extends ViewModel {
     public Project getProjectById(long id){
         return projectDataRepository.getProjectById(id);
     }
-    public static List<Task> orderByLastToNew() {
+    public  List<Task> orderByLastToNew() {
         return taskDataRepository.orderByLastToNew();}
-    public static List<Task> orderByNewToLast(){return taskDataRepository.orderByNewToLast();}
+    public  List<Task> orderByNewToLast(){return taskDataRepository.orderByNewToLast();}
 
-    public static List<Task> orderZA(){return taskDataRepository.orderZA();}
+    public  List<Task> orderZA(){return taskDataRepository.orderZA();}
 
-    public static List<Task> orderAZ(){return taskDataRepository.orderAZ();}
+    public  List<Task> orderAZ(){return taskDataRepository.orderAZ();}
 }
