@@ -69,7 +69,7 @@ public class TasksAdapter extends RecyclerView.Adapter<TasksAdapter.TaskViewHold
             @Override
             public void onClick(View view) {
                 EventBus.getDefault().post(new DeleteTaskEvent(tasks.get(position)));
-                }
+            }
         });
     }
 

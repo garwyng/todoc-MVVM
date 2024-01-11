@@ -33,13 +33,23 @@ public class TaskDataRepository {
     public void updateTask(Task task) {
         this.taskDao.updateTask(task);
     }
+
     public List<Task> orderByLastToNew() {
-        return this.taskDao.orderByLastToNew();}
-    public List<Task> orderByNewToLast(){return this.taskDao.orderByNewToLast();}
+        return this.taskDao.orderByLastToNew();
+    }
 
-    public List<Task> orderZA(){return this.taskDao.orderZA();}
+    public List<Task> orderByNewToLast() {
+        return this.taskDao.orderByNewToLast();
+    }
 
-    public List<Task> orderAZ(){return this.taskDao.orderAZ();}
+    public List<Task> orderZA() {
+        return this.taskDao.orderZA();
+    }
+
+    public List<Task> orderAZ() {
+        return this.taskDao.orderAZ();
+    }
+
     /**
      * List of all possible sort methods for task
      */

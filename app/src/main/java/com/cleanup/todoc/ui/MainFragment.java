@@ -116,6 +116,7 @@ public class MainFragment extends Fragment {
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
         mRecyclerView.setAdapter(new TasksAdapter(tasks, mViewModel));
     }
+
     public void showAddTaskDialog() {
         final AlertDialog dialog = getAddTaskDialog();
 
@@ -237,28 +238,29 @@ public class MainFragment extends Fragment {
             binding.lblNoTask.setVisibility(View.VISIBLE);
             mRecyclerView.setVisibility(View.GONE);
         } else {
-            SharedPreferences orderPreferences = getActivity().getSharedPreferences(PREFS_ORDER,0);
-            String order = orderPreferences.getString("ORDER","none");
-            Log.d("order", "updateTasks: "+ order);
+            SharedPreferences orderPreferences = getActivity().getSharedPreferences(PREFS_ORDER, 0);
+            String order = orderPreferences.getString("ORDER", "none");
+            Log.d("order", "updateTasks: " + order);
             binding.lblNoTask.setVisibility(View.GONE);
             mRecyclerView.setVisibility(View.VISIBLE);
             switch (order) {
                 case "az":
-                   tasks= mViewModel.orderAZ();
+                    tasks = mViewModel.orderAZ();
                     break;
                 case "za":
-                    tasks=mViewModel.orderZA();
+                    tasks = mViewModel.orderZA();
                     break;
                 case "FistToOlder":
-                    tasks=mViewModel.orderByNewToLast();
+                    tasks = mViewModel.orderByNewToLast();
                     break;
                 case "OlderToFirst":
-                    tasks=mViewModel.orderByLastToNew();
+                    tasks = mViewModel.orderByLastToNew();
                     break;
             }
-            mRecyclerView.setAdapter(new TasksAdapter(tasks,mViewModel));
+            mRecyclerView.setAdapter(new TasksAdapter(tasks, mViewModel));
         }
     }
+
     @Override
     public void onStart() {
         super.onStart();
@@ -271,19 +273,22 @@ public class MainFragment extends Fragment {
         super.onStop();
         EventBus.getDefault().unregister(this);
     }
+
     @Override
     public void onResume() {
         super.onResume();
         updateTasks();
     }
+
     @Subscribe
-    public void onSharePref(SharePrefEvent event){
+    public void onSharePref(SharePrefEvent event) {
         Log.d("aaaaa", "onSharePref: ");
         updateTasks();
     }
+
     @Subscribe
-    public void onDeleteTask(DeleteTaskEvent event){
-        mViewModel.deleteTask(event.task);
+    public void onDeleteTask(DeleteTaskEvent event) {
+        MainFragmentViewModel.deleteTask(event.task);
         tasks = mViewModel.getTasks();
         updateTasks();
     }

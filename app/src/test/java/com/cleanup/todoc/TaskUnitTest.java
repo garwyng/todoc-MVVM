@@ -4,28 +4,15 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertSame;
 
-import android.app.Application;
 import android.content.Context;
 
-import androidx.annotation.NonNull;
-import androidx.room.DatabaseConfiguration;
-import androidx.room.InvalidationTracker;
-import androidx.sqlite.db.SupportSQLiteOpenHelper;
-
-import com.cleanup.todoc.database.ProjectDao;
-import com.cleanup.todoc.database.TaskDao;
 import com.cleanup.todoc.database.TodocDatabase;
 import com.cleanup.todoc.models.Project;
 import com.cleanup.todoc.models.Task;
-import com.cleanup.todoc.ui.MainActivity;
-import com.cleanup.todoc.ui.MainFragment;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.manipulation.Ordering;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -37,11 +24,13 @@ import java.util.List;
 public class TaskUnitTest {
     TodocDatabase database;
     Context context;
+
     @Before
-    public void start(){
+    public void start() {
 
         database = TodocDatabase.getInstance(context);
     }
+
     @Test
     public void test_projects() {
         final Task task1 = new Task(1, 1, "task 1", new Date().getTime());

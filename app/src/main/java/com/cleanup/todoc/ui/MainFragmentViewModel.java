@@ -1,20 +1,11 @@
 package com.cleanup.todoc.ui;
 
-import android.content.Context;
-import android.widget.EditText;
-import android.widget.Spinner;
-
-import androidx.annotation.Nullable;
-import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.cleanup.todoc.database.TodocDatabase;
 import com.cleanup.todoc.models.Project;
 import com.cleanup.todoc.models.Task;
 import com.cleanup.todoc.repositories.ProjectDataRepository;
 import com.cleanup.todoc.repositories.TaskDataRepository;
-
-import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,6 +16,7 @@ public class MainFragmentViewModel extends ViewModel {
     private static Executor executor;
     private final ProjectDataRepository projectDataRepository;
     private List<Project> allProjects;
+
     public MainFragmentViewModel(ProjectDataRepository projectDataRepository, TaskDataRepository taskDataRepository) {
         MainFragmentViewModel.taskDataRepository = taskDataRepository;
         this.projectDataRepository = projectDataRepository;
@@ -36,7 +28,7 @@ public class MainFragmentViewModel extends ViewModel {
 
     public static void deleteTask(Task task) {
         taskDataRepository.deleteTask(task);
-        }
+    }
 
 
     public void updateTask(Task task) {
@@ -55,14 +47,24 @@ public class MainFragmentViewModel extends ViewModel {
         }
         return tasks;
     }
-    public Project getProjectById(long id){
+
+    public Project getProjectById(long id) {
         return projectDataRepository.getProjectById(id);
     }
-    public  List<Task> orderByLastToNew() {
-        return taskDataRepository.orderByLastToNew();}
-    public  List<Task> orderByNewToLast(){return taskDataRepository.orderByNewToLast();}
 
-    public  List<Task> orderZA(){return taskDataRepository.orderZA();}
+    public List<Task> orderByLastToNew() {
+        return taskDataRepository.orderByLastToNew();
+    }
 
-    public  List<Task> orderAZ(){return taskDataRepository.orderAZ();}
+    public List<Task> orderByNewToLast() {
+        return taskDataRepository.orderByNewToLast();
+    }
+
+    public List<Task> orderZA() {
+        return taskDataRepository.orderZA();
+    }
+
+    public List<Task> orderAZ() {
+        return taskDataRepository.orderAZ();
+    }
 }

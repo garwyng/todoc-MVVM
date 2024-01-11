@@ -1,9 +1,5 @@
 package com.cleanup.todoc;
 
-import static com.cleanup.todoc.R.raw.projects;
-
-import static org.junit.Assert.assertSame;
-
 import android.util.Log;
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule;
@@ -14,7 +10,6 @@ import androidx.test.platform.app.InstrumentationRegistry;
 import com.cleanup.todoc.database.TodocDatabase;
 import com.cleanup.todoc.models.Project;
 import com.cleanup.todoc.models.Task;
-import com.google.gson.Gson;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -23,13 +18,9 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
-import java.util.concurrent.Executors;
 
 @RunWith(AndroidJUnit4.class)
 public class TestBaseTodoc {
@@ -47,9 +38,9 @@ public class TestBaseTodoc {
                 .allowMainThreadQueries()
                 .build();
         List<Project> projectList = new ArrayList<>();
-        projectList.add(new Project(1L,"Projet Tartampion",-1385775));
-        projectList.add(new Project(2L,"Projet Lucidia",-4928070));
-        projectList.add(new Project(3L,"Projet Circus",-6041902));
+        projectList.add(new Project(1L, "Projet Tartampion", -1385775));
+        projectList.add(new Project(2L, "Projet Lucidia", -4928070));
+        projectList.add(new Project(3L, "Projet Circus", -6041902));
         database.daoProject().insertAll(projectList);
     }
 
@@ -71,33 +62,35 @@ public class TestBaseTodoc {
         this.database.daoProject().insert(projectTest);
         List<Project> projects = this.database.daoProject().getAllProjects();
         Log.d("insertProjectTest", "insertProjectTest: " + projects);
-        Assert.assertTrue(projects.get(3).getName().equals(projectTest.getName()));
+        Assert.assertEquals(projects.get(3).getName(), projectTest.getName());
         Assert.assertEquals(4, projects.size());
     }
 
     @Test
     public void addTaskTest() throws InterruptedException {
         List<Task> tasks = this.database.daoTask().getAll();
-        Assert.assertEquals(0,tasks.size());
+        Assert.assertEquals(0, tasks.size());
 
         this.database.daoTask().insertTask(TASK_DEMO);
         tasks = this.database.daoTask().getAll();
-        Assert.assertEquals(1,tasks.size());
-        Assert.assertTrue(tasks.get(0).getName().equals(TASK_DEMO.getName()));
+        Assert.assertEquals(1, tasks.size());
+        Assert.assertEquals(tasks.get(0).getName(), TASK_DEMO.getName());
     }
+
     @Test
-    public void removeTaskTest(){
+    public void removeTaskTest() {
         List<Task> tasks = this.database.daoTask().getAll();
-        Assert.assertEquals(0,tasks.size());
+        Assert.assertEquals(0, tasks.size());
 
         this.database.daoTask().insertTask(TASK_DEMO);
         tasks = this.database.daoTask().getAll();
-        Assert.assertEquals(1,tasks.size());
+        Assert.assertEquals(1, tasks.size());
 
         this.database.daoTask().deleteTask(tasks.get(0));
         tasks = this.database.daoTask().getAll();
-        Assert.assertEquals(0,tasks.size());
+        Assert.assertEquals(0, tasks.size());
     }
+
     @Test
     public void test_az_comparator() {
         final Task task1 = new Task(1, 1, "aaa", 123);
@@ -109,9 +102,9 @@ public class TestBaseTodoc {
         database.daoTask().insertTask(task3);
         List<Task> tasks = database.daoTask().orderAZ();
 
-        Assert.assertTrue(tasks.get(0).getName().equals(task1.getName()));
-        Assert.assertTrue(tasks.get(1).getName().equals(task3.getName()));
-        Assert.assertTrue(tasks.get(2).getName().equals(task2.getName()));
+        Assert.assertEquals(tasks.get(0).getName(), task1.getName());
+        Assert.assertEquals(tasks.get(1).getName(), task3.getName());
+        Assert.assertEquals(tasks.get(2).getName(), task2.getName());
     }
 
     @Test
@@ -125,9 +118,9 @@ public class TestBaseTodoc {
         database.daoTask().insertTask(task3);
         List<Task> tasks = database.daoTask().orderZA();
 
-        Assert.assertTrue(tasks.get(0).getName().equals(task2.getName()));
-        Assert.assertTrue(tasks.get(1).getName().equals(task3.getName()));
-        Assert.assertTrue(tasks.get(2).getName().equals(task1.getName()));
+        Assert.assertEquals(tasks.get(0).getName(), task2.getName());
+        Assert.assertEquals(tasks.get(1).getName(), task3.getName());
+        Assert.assertEquals(tasks.get(2).getName(), task1.getName());
     }
 
     @Test
@@ -141,9 +134,9 @@ public class TestBaseTodoc {
         database.daoTask().insertTask(task3);
         List<Task> tasks = database.daoTask().orderByNewToLast();
 
-        Assert.assertTrue(tasks.get(0).getName().equals(task3.getName()));
-        Assert.assertTrue(tasks.get(1).getName().equals(task2.getName()));
-        Assert.assertTrue(tasks.get(2).getName().equals(task1.getName()));
+        Assert.assertEquals(tasks.get(0).getName(), task3.getName());
+        Assert.assertEquals(tasks.get(1).getName(), task2.getName());
+        Assert.assertEquals(tasks.get(2).getName(), task1.getName());
     }
 
     @Test
@@ -157,8 +150,8 @@ public class TestBaseTodoc {
         database.daoTask().insertTask(task3);
         List<Task> tasks = database.daoTask().orderByLastToNew();
 
-        Assert.assertTrue(tasks.get(0).getName().equals(task1.getName()));
-        Assert.assertTrue(tasks.get(1).getName().equals(task2.getName()));
-        Assert.assertTrue(tasks.get(2).getName().equals(task3.getName()));
+        Assert.assertEquals(tasks.get(0).getName(), task1.getName());
+        Assert.assertEquals(tasks.get(1).getName(), task2.getName());
+        Assert.assertEquals(tasks.get(2).getName(), task3.getName());
     }
 }

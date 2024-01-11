@@ -25,7 +25,7 @@ public class TestUtils {
 
     public static <VH extends RecyclerView.ViewHolder> ViewAction actionOnItemViewAtPosition(int position,
                                                                                              @IdRes
-                                                                                                     int viewId,
+                                                                                             int viewId,
                                                                                              ViewAction viewAction) {
         return new ActionOnItemViewAtPositionViewAction(position, viewId, viewAction);
     }
@@ -120,7 +120,8 @@ public class TestUtils {
         }
 
     }
-    public static class  RecyclerViewItemCountAssertion implements ViewAssertion {
+
+    public static class RecyclerViewItemCountAssertion implements ViewAssertion {
         private final Matcher<Integer> matcher;
 
         private RecyclerViewItemCountAssertion(Matcher<Integer> matcher) {
