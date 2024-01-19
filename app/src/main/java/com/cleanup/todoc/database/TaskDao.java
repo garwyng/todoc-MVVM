@@ -26,9 +26,6 @@ public interface TaskDao {
     @Query("SELECT * From task_table WHERE id= :taskId")
     Task getTaskById(Long taskId);
 
-    @Update
-    void updateTask(Task task);
-
     @Query("SELECT * FROM task_table ORDER BY name ASC")
     List<Task> orderAZ();
 

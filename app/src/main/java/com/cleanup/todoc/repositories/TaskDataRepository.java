@@ -14,10 +14,6 @@ public class TaskDataRepository {
         this.taskDao = taskDao;
     }
 
-    public Task getTask(Long TaskId) {
-        return this.taskDao.getTaskById(TaskId);
-    }
-
     public List<Task> getTasks() {
         return TodocDatabase.getInstance(MainFragment.getInstanceFragment().getContext()).daoTask().getAll();
     }
@@ -28,10 +24,6 @@ public class TaskDataRepository {
 
     public void deleteTask(Task task) {
         this.taskDao.deleteTask(task);
-    }
-
-    public void updateTask(Task task) {
-        this.taskDao.updateTask(task);
     }
 
     public List<Task> orderByLastToNew() {
@@ -48,33 +40,6 @@ public class TaskDataRepository {
 
     public List<Task> orderAZ() {
         return this.taskDao.orderAZ();
-    }
-
-    /**
-     * List of all possible sort methods for task
-     */
-    private enum SortMethod {
-        /**
-         * Sort alphabetical by name
-         */
-        ALPHABETICAL,
-        /**
-         * Inverted sort alphabetical by name
-         */
-        ALPHABETICAL_INVERTED,
-        /**
-         * Lastly created first
-         */
-        RECENT_FIRST,
-        /**
-         * First created first
-         */
-        OLD_FIRST,
-        /**
-         * No sort
-         */
-        NONE
-
     }
 }
 

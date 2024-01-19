@@ -13,7 +13,6 @@ import java.util.concurrent.Executor;
 
 public class MainFragmentViewModel extends ViewModel {
     private static TaskDataRepository taskDataRepository;
-    private static Executor executor;
     private final ProjectDataRepository projectDataRepository;
     private List<Project> allProjects;
 
@@ -28,11 +27,6 @@ public class MainFragmentViewModel extends ViewModel {
 
     public static void deleteTask(Task task) {
         taskDataRepository.deleteTask(task);
-    }
-
-
-    public void updateTask(Task task) {
-        taskDataRepository.updateTask(task);
     }
 
     public List<Project> getAllProject() {
