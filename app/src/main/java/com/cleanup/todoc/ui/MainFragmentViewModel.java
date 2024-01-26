@@ -8,6 +8,7 @@ import com.cleanup.todoc.repositories.ProjectDataRepository;
 import com.cleanup.todoc.repositories.TaskDataRepository;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.Executor;
 
@@ -15,6 +16,7 @@ public class MainFragmentViewModel extends ViewModel {
     private static TaskDataRepository taskDataRepository;
     private final ProjectDataRepository projectDataRepository;
     private List<Project> allProjects;
+    private static List<Task> tasks=new ArrayList<>();
 
     public MainFragmentViewModel(ProjectDataRepository projectDataRepository, TaskDataRepository taskDataRepository) {
         MainFragmentViewModel.taskDataRepository = taskDataRepository;
@@ -43,22 +45,27 @@ public class MainFragmentViewModel extends ViewModel {
     }
 
     public Project getProjectById(long id) {
+
         return projectDataRepository.getProjectById(id);
     }
 
     public List<Task> orderByLastToNew() {
+
         return taskDataRepository.orderByLastToNew();
     }
 
     public List<Task> orderByNewToLast() {
+
         return taskDataRepository.orderByNewToLast();
     }
 
     public List<Task> orderZA() {
+
         return taskDataRepository.orderZA();
     }
 
     public List<Task> orderAZ() {
+        Collections.sort(tasks, new Task.TaskAZComparator());
         return taskDataRepository.orderAZ();
     }
 }

@@ -35,6 +35,7 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -81,7 +82,6 @@ public class MainFragment extends Fragment {
         dialogSpinner = binding.getRoot().findViewById(R.id.project_spinner);
         mRecyclerView = binding.listTasks;
         return view;
-
     }
 
     private void configureViewModel() {
@@ -116,7 +116,6 @@ public class MainFragment extends Fragment {
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
         mRecyclerView.setAdapter(new TasksAdapter(tasks, mViewModel));
     }
-
     public void showAddTaskDialog() {
         final AlertDialog dialog = getAddTaskDialog();
 
@@ -127,7 +126,6 @@ public class MainFragment extends Fragment {
 
         populateDialogSpinner();
     }
-
     /**
      * Sets the data of the Spinner with projects to associate to a new task
      */
@@ -145,7 +143,6 @@ public class MainFragment extends Fragment {
             Log.e("SpinnerError", "No projects found.");
         }
     }
-
     /**
      * Returns the dialog allowing the user to create a new task.
      *
@@ -167,18 +164,13 @@ public class MainFragment extends Fragment {
                 dialog[0] = null;
             }
         });
-
         dialog[0] = alertBuilder.create();
-
         // This instead of listener to positive button in order to avoid automatic dismiss
         dialog[0].setOnShowListener(new DialogInterface.OnShowListener() {
-
             @Override
             public void onShow(DialogInterface dialogInterface) {
-
                 Button button = dialog[0].findViewById(R.id.ajouter_button);
                 button.setOnClickListener(new View.OnClickListener() {
-
                     @Override
                     public void onClick(View view) {
                         onPositiveButtonClick(dialog[0]);
@@ -186,10 +178,8 @@ public class MainFragment extends Fragment {
                 });
             }
         });
-
         return dialog[0];
     }
-
     public void onPositiveButtonClick(DialogInterface dialogInterface) {
         // If dialog is open
         if (dialogEditText != null && dialogSpinner != null) {
@@ -201,14 +191,12 @@ public class MainFragment extends Fragment {
             if (dialogSpinner.getSelectedItem() instanceof Project) {
                 taskProject = (Project) dialogSpinner.getSelectedItem();
             }
-
             // If a name has not been set
             if (taskName.trim().isEmpty()) {
                 dialogEditText.setError((getContext().getString(R.string.empty_task_name)));
             }
             // If both project and name of the task have been set
             else if (taskProject != null) {
-
                 Task task = new Task(
                         taskProject.getId(),
                         taskName,
@@ -229,7 +217,6 @@ public class MainFragment extends Fragment {
             dialogInterface.dismiss();
         }
     }
-
     /**
      * Updates the list of tasks in the UI
      */
@@ -245,52 +232,50 @@ public class MainFragment extends Fragment {
             mRecyclerView.setVisibility(View.VISIBLE);
             switch (order) {
                 case "az":
-                    tasks = mViewModel.orderAZ();
+                    Collections.sort(tasks, new Task.TaskAZComparator());
+                    //tasks = mViewModel.orderAZ();
                     break;
                 case "za":
-                    tasks = mViewModel.orderZA();
+                    Collections.sort(tasks, new Task.TaskZAComparator());
+                    //tasks = mViewModel.orderZA();
                     break;
                 case "FistToOlder":
-                    tasks = mViewModel.orderByNewToLast();
+                    Collections.sort(tasks, new Task.TaskRecentComparator());
+                    //tasks = mViewModel.orderByNewToLast();
                     break;
                 case "OlderToFirst":
-                    tasks = mViewModel.orderByLastToNew();
+                    Collections.sort(tasks, new Task.TaskOldComparator());
+                    //tasks = mViewModel.orderByLastToNew();
                     break;
             }
             mRecyclerView.setAdapter(new TasksAdapter(tasks, mViewModel));
         }
     }
-
     @Override
     public void onStart() {
         super.onStart();
         updateTasks();
         EventBus.getDefault().register(this);
     }
-
     @Override
     public void onStop() {
         super.onStop();
         EventBus.getDefault().unregister(this);
     }
-
     @Override
     public void onResume() {
         super.onResume();
         updateTasks();
     }
-
     @Subscribe
     public void onSharePref(SharePrefEvent event) {
         Log.d("aaaaa", "onSharePref: ");
         updateTasks();
     }
-
     @Subscribe
     public void onDeleteTask(DeleteTaskEvent event) {
         MainFragmentViewModel.deleteTask(event.task);
         tasks = mViewModel.getTasks();
         updateTasks();
     }
-
 }

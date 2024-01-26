@@ -1,87 +1,57 @@
-package com.cleanup.todoc;
+package com.cleanup.todoc.ui;
 
-
-import static androidx.test.espresso.Espresso.onData;
 import static androidx.test.espresso.Espresso.onView;
-import static androidx.test.espresso.Espresso.pressBack;
 import static androidx.test.espresso.action.ViewActions.click;
 import static androidx.test.espresso.action.ViewActions.replaceText;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
-import static androidx.test.espresso.matcher.ViewMatchers.isAssignableFrom;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
-import static androidx.test.espresso.matcher.ViewMatchers.withClassName;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
 import static com.cleanup.todoc.TestUtils.withRecyclerView;
 import static org.hamcrest.Matchers.allOf;
-import static org.hamcrest.Matchers.anything;
-import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.not;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
-import android.app.Activity;
-import android.app.Instrumentation;
-import android.content.Context;
-import android.util.Log;
-import android.view.View;
-import android.view.ViewGroup;
-import android.view.ViewParent;
-import android.widget.AdapterView;
-
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.room.Room;
-import androidx.test.core.app.ActivityScenario;
-import androidx.test.espresso.Espresso;
-import androidx.test.espresso.ViewInteraction;
-import androidx.test.espresso.action.ViewActions;
-import androidx.test.ext.junit.rules.ActivityScenarioRule;
-import androidx.test.ext.junit.runners.AndroidJUnit4;
-import androidx.test.platform.app.InstrumentationRegistry;
-
+import com.cleanup.todoc.R;
+import com.cleanup.todoc.TestUtils;
+import com.cleanup.todoc.database.ProjectDao;
+import com.cleanup.todoc.database.TaskDao;
 import com.cleanup.todoc.database.TodocDatabase;
-import com.cleanup.todoc.databinding.ActivityMainBinding;
-import com.cleanup.todoc.models.Project;
 import com.cleanup.todoc.models.Task;
-import com.cleanup.todoc.ui.MainActivity;
-import com.cleanup.todoc.ui.MainFragment;
+import com.cleanup.todoc.repositories.ProjectDataRepository;
+import com.cleanup.todoc.repositories.TaskDataRepository;
 
-import org.hamcrest.Description;
-import org.hamcrest.Matcher;
-import org.hamcrest.TypeSafeMatcher;
 import org.junit.Before;
-import org.junit.Rule;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runner.manipulation.Ordering;
+import org.mockito.Mock;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
-import java.util.Locale;
 
-/**
- * Instrumented test, which will execute on an Android device.
- *
- * @author Gaëtan HERFRAY
- * @see <a href="http://d.android.com/tools/testing">Testing documentation</a>
- */
-@RunWith(AndroidJUnit4.class)
-public class MainActivityInstrumentedTest {
-    private TodocDatabase database;
-    private int size;
-    @Rule
-    public ActivityScenarioRule<MainActivity> mActivityScenarioRule =
-            new ActivityScenarioRule<>(MainActivity.class);
-    private int position;
-    private List<Task> firstTasksCreated=new ArrayList<>();
+public class MainAtiityInstrumentalMokTest {
+    @Mock
+    TodocDatabase databaseMocked;
+    @Mock
+    ProjectDao projectDaoMocked;
+    @Mock
+    TaskDao taskDaoMocked;
+    @Mock
+    ProjectDataRepository projectDataRepositoryMocked;
+    @Mock
+    TaskDataRepository taskDataRepositoryMocked;
+    List<Task> mockedList= new ArrayList<>();
+    final Task task1 = new Task(1, 1, "aaa Tâche example", 123);
+    final Task task2 = new Task(2, 2, "zzz Tâche example", 124);
+    final Task task3 = new Task(3, 3, "hhh Tâche example", 125);
+
 
     @Before
     public void setUp() throws Exception {
-        Context context = InstrumentationRegistry.getInstrumentation().getTargetContext();
-        database = TodocDatabase.getInstance(context);
-        List<Task> tasks=database.daoTask().getAll();
-        if (tasks.size() > 0){
-        database.daoTask().deleteAllTasks(tasks);}
+        when(databaseMocked.daoTask()).thenReturn(taskDaoMocked);
+        when(databaseMocked.daoProject()).thenReturn(projectDaoMocked);
     }
-
     @Test
     public void addAndRemoveTask() {
 
@@ -93,7 +63,7 @@ public class MainActivityInstrumentedTest {
         // Check that recyclerView is displayed
         onView(allOf(withId(R.id.list_tasks),isDisplayed()));
         // Check that it contains one element only
-        onView((allOf(withId(R.id.list_tasks)))).check(TestUtils.RecyclerViewItemCountAssertion.withItemCount(  size+1));
+        onView((allOf(withId(R.id.list_tasks)))).check(TestUtils.RecyclerViewItemCountAssertion.withItemCount( 1));
         onView(withRecyclerView(R.id.list_tasks).atPositionOnView(0, R.id.img_delete)).perform(click());
         // Check that lblTask is displayed
         onView(allOf(withId(R.id.lbl_no_task), isDisplayed()));
@@ -101,7 +71,6 @@ public class MainActivityInstrumentedTest {
         onView(allOf(withId(R.id.txt_task_name), not(isDisplayed())));
 
     }
-
     @Test
     public void sortTasks() {
         //tasks creation

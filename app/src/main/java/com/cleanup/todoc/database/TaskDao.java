@@ -37,6 +37,8 @@ public interface TaskDao {
 
     @Query("SELECT * FROM task_table ORDER BY creationTimestamp ASC")
     List<Task> orderByLastToNew();
+    @Delete
+    void deleteAllTasks(List<Task> tasks);
 
 
 }
